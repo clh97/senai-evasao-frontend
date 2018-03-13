@@ -14,10 +14,6 @@ const RouteSwitcher = withRouter( ({ history }) => {
 } );
 
 class MainContainer extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     /* -- LIFECYCLE METHODS -- */
     render() {
         const informations = this.requestInformations();

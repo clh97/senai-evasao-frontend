@@ -18,16 +18,8 @@ class Administration extends Component {
                 <ExpandableContainer render={<AddCourse />} title={"Adicionar Curso"} />
                 <ExpandableContainer render={<AddClass />} title={"Cadastro de Turmas"} />
                 <ExpandableContainer render={<Uploading handleUploadInformation={ e => this.handleUpload(e) } />} title={"Upload de Tabelas"} />
+                <ExpandableContainer render={<Uploading />} title={"Adicionar Alunos"} />
                 
-                {/* <h2>Cadastro de Turmas</h2>
-                <AddClass />
-
-                <h2>Upload de Tabelas</h2>
-                <Uploading /> */}
-
-                {/* <a href="./adicionar">Adicionar Curso</a>
-                <a href="./classes">Cadastro de Turmas</a>
-                <a href="./upload">Upload de Tabelas</a> */}
             </div>
         );
     }
