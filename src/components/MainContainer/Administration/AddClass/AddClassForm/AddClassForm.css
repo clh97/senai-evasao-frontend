@@ -1,0 +1,18 @@
+.principal__administration__add-class label {
+    display: block;
+    width: 120px;
+    margin: 0 .5rem;
+    text-align: right;
+}
+
+.principal__administration__add-class div * {
+    display: inline-block;
+}
+
+.principal__administration__add-class div {
+    margin: .5rem 0;
+}
+
+.principal__administration__add-class div select, input {
+    width: 55%;
+}

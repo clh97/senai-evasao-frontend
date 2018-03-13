@@ -1,0 +1,21 @@
+.principal__tab-selector {
+    padding: 12px;
+}
+
+.principal__tab-selector__home,
+.principal__tab-selector__administration,
+.principal__tab-selector__statistics {
+    padding: 8px 20px;
+    display: inline-block;
+    appearance: none;
+    background: none;
+    border: none;
+    outline: none;
+    color: white;
+}
+
+.principal__tab-selector__home::-moz-focus-inner,
+.principal__tab-selector__administration::-moz-focus-inner,
+.principal__tab-selector__statistics::-moz-focus-inner {
+    border: 0;
+}

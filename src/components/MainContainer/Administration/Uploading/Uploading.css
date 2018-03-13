@@ -1,0 +1,22 @@
+.principal__administration__uploading label {
+    display: block;
+    width: 120px;
+    margin: 0 .5rem;
+    text-align: right;
+}
+
+.principal__administration__uploading div * {
+    display: inline-block;
+}
+
+.principal__administration__uploading div {
+    margin: .5rem 0;
+}
+
+.principal__administration__uploading div select, input {
+    width: 55%;
+}
+
+.principal__administration__uploading__uploadform input {
+    width: 50%;
+}

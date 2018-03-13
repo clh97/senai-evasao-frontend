@@ -1,0 +1,10 @@
+.principal__administration {
+    width: 100%;
+    padding: 20px;
+}
+
+a {
+    display: block;
+    text-decoration: none;
+    color: white;
+}

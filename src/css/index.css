@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400:700');
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --default-bg: #6B1E95;
+}
+
+body {
+
+  height: 125vh;
+  
+  text-align: center;
+  
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  
+  color: white;
+  background: var(--default-bg);
+}
+
+.logo {
+  width: 20%;
+  margin-top: 12%;
+}
+
+::-webkit-scrollbar { 
+  display: none; 
+}
+
+button::-moz-focus-inner, select:focus::-moz-focus-inner,
+button, select{
+  border: 0;
+  outline: 0;
+}
+
+/* -- COMPONENTES PADRÃO -- */
+
+input {
+  width: calc(30% + 120px);
+  margin: .5rem 0;
+  padding: 6px 8px;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, .50);
+  background: transparent;
+  transition: width 1s;
+  color: white;
+}
+
+input:focus {
+  width: calc(50% + 120px);
+  outline: 0;
+}
+
+button {
+  margin: .5rem auto;
+  padding: 8px 64px;
+  border: none;
+  background: white;
+  color: var(--default-bg);
+  border-radius: 4px;
+}
+
+
+select {
+  padding: 12px 8px;
+  
+  color: var(--default-bg);
+  border: none;
+}
+
+select::after {
+  content: 'picanha';
+}
+
+select:-moz-focusring {
+  color: transparent;
+  text-shadow: 0 0 0 var(--default-bg);
+}
