@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import './EditableList.css';
 
-const EditableListItem = ({id, content, action, buttonText}) => (
-    <li key={id}>
+const EditableListItem = ({id, content, action, buttonText, onClickAction}) => (
+    <li key={id} onClick={ e => {e.preventDefault(); onClickAction ? onClickAction() : () => {} } }>
         <span>{(content instanceof String) ? content.name : content }</span>
-        <button onClick={action}>{buttonText}</button>
+        {
+            action ? <button onClick={action}>{buttonText}</button> : undefined
+        }
     </li>
 );
 
@@ -17,14 +19,20 @@ const EditableListAdd = ({onAddItem}) => (
     </li>
 );
 
+/* ARRUMAR ESSE COMPONENTEEEEEEE!! VER ESSA CONFUSÃO NO ENABLELISTITEM E TENTAR TRANSFORMAR EM LISTA SÓ DE VISUALIZAÇÃO TBM!! */
+
 class EditableList extends Component {
 
     render() {
         return (
             <div className="editable">
-                <ul className="editable__list" >
+                <ul className="editable__list">
                     {
-                        this.props.items.map(item => <EditableListItem key={item.id} content={item.name} action={ e => this.props.onDeleteItem(item.id) } buttonText={'DEL'} />)
+                        this.props.items.map(item => {
+                            const { id, name } = item;
+                            return <EditableListItem key={id} content={name} action={ e => this.props.onDeleteItem ? this.props.onDeleteItem(id) : undefined } buttonText={this.props.buttonText ? this.props.buttonText : 'DEL' } onClickAction={ () => this.props.onClickAction ? this.props.onClickAction() : undefined } />
+                        }
+                    )
                     }
                     {
                         this.props.withoutAdd ? undefined : <EditableListAdd id={this.props.items.length} onAddItem={this.props.onAddItem} />
