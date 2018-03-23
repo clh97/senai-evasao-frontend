@@ -18,7 +18,7 @@ class AddCourse extends Component {
         return (
             <div className="principal__administration__add-course">
                 {
-                    <EditableList items={this.state.courses} onDeleteItem={ e => this.handleDeleteCourse(e) } onAddItem={ e => this.handleNewCourse(e) } />
+                    <EditableList items={this.state.courses} rightButton={true} onDeleteItem={ e => this.handleDeleteCourse(e) } onAddItem={ e => this.handleNewCourse(e) } />
                 }
             </div>
         )
@@ -28,7 +28,7 @@ class AddCourse extends Component {
         let novaLista = this.state.courses;
         novaLista.push(
             {
-                id: novaLista.length,
+                id: this.state.courses.length + 1,
                 name: e.target.name.value
             }
         )

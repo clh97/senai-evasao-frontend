@@ -27,9 +27,6 @@ class MainContainer extends Component {
                     <Route path="/home" render={ () => <Home info={informations} /> } />
                     <Route path="/administracao" render={ () => <Administration /> } />
                     <Route path="/estatisticas" component={Statistics} />
-                    {/* <Route path="/adicionar" component={AddCourse} />
-                    <Route path="/classes" component={AddClass} />
-                    <Route path="/upload" component={Uploading} /> */}
                 </Switch>
             </main>
         );
@@ -38,7 +35,7 @@ class MainContainer extends Component {
     /* -- CUSTOM METHODS -- */
     requestInformations = () => {
         return {
-            indiceEvasao: '90%'
+            indiceEvasao: '-90%'
         };
     }
 }

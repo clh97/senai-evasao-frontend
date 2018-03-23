@@ -1,16 +1,9 @@
 import React, { Component } from 'react';
 import './LoginForm.css';
 
+import { API_LOGIN_URL }    from '../../data_types/ApiData';
+
 class LoginForm extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            username: '',
-            password: ''
-        };
-    }
-
     render() {
         return (
             <form className="portal__login" onSubmit={e => this.handleLoginEvent(e)}>
@@ -26,14 +19,32 @@ class LoginForm extends Component {
         
         const { username, password } = event.target;
 
-        this.setState({
-            username: username.value,
-            password: password.value
-        }, () => this.props.pseudoLogin(this.state.username, this.state.password))
+        const formData = {
+            'Email': (username.value.length > 0) ? username.value : undefined,
+            'Senha': (password.value.length > 0) ? password.value : undefined
+        };
 
-        
-
-        /* conversar com a galera do back-end para ver como vai ser o request de login */
+        fetch(API_LOGIN_URL, {
+            headers: {
+                'content-type': 'application/json'
+            },
+			method: 'POST', 
+            body: JSON.stringify(formData)
+        }).then( response => response.json().then( data => {
+            switch (data.authenticated) {
+                case true:
+                    this.props.authenticateUser();
+                break;
+                
+                case false:
+                    this.props.authenticationFail(data.message);
+                break;
+            
+                default:
+                    this.props.authenticationFail(data.message);
+                break;
+            }
+        } ));
     }
 }
 

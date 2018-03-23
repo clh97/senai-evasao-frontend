@@ -6,6 +6,7 @@
 
 :root {
   --default-bg: #6B1E95;
+  --darker-bg: #370F4C;
 }
 
 body {
@@ -39,18 +40,16 @@ button, select{
 /* -- COMPONENTES PADRÃO -- */
 
 input {
-  width: calc(30% + 120px);
+  width: calc(50% + 120px);
   margin: .5rem 0;
   padding: 6px 8px;
   border: none;
   border-bottom: 1px solid rgba(255, 255, 255, .50);
   background: transparent;
-  transition: width 1s;
   color: white;
 }
 
 input:focus {
-  width: calc(50% + 120px);
   outline: 0;
 }
 

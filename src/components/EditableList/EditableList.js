@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import './EditableList.css';
 
 const EditableListItem = ({id, content, action, buttonText, onClickAction}) => (
-    <li key={id} onClick={ e => {e.preventDefault(); onClickAction ? onClickAction() : () => {} } }>
+    <li key={id} onClick={ e => {e.preventDefault();  onClickAction() } }>
         <span>{(content instanceof String) ? content.name : content }</span>
         {
-            action ? <button onClick={action}>{buttonText}</button> : undefined
+            buttonText === '' ? <button onClick={action}>{buttonText}</button> : undefined
         }
     </li>
 );
@@ -19,10 +19,7 @@ const EditableListAdd = ({onAddItem}) => (
     </li>
 );
 
-/* ARRUMAR ESSE COMPONENTEEEEEEE!! VER ESSA CONFUSÃO NO ENABLELISTITEM E TENTAR TRANSFORMAR EM LISTA SÓ DE VISUALIZAÇÃO TBM!! */
-
 class EditableList extends Component {
-
     render() {
         return (
             <div className="editable">
