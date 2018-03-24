@@ -7,6 +7,8 @@ import StudentList              from './StudentList/StudentList';
 
 import ExpandableContainer      from '../../ExpandableContainer/ExpandableContainer';
 
+import { API_UPLOAD_URL }       from '../../../data_types/ApiData';
+
 import './Administration.css';
 
 
@@ -27,7 +29,15 @@ class Administration extends Component {
 
     /* -- CUSTOM METHODS -- */
     handleUpload = (form) => {
-        console.dir(form);
+        const files = form.target.file.files;
+        let data = new FormData();
+        for(let i = 0; i < files.length; i++) {
+            data.append('files', files[i]);
+        }
+        fetch(API_UPLOAD_URL, {
+            method: 'POST',
+            body: data
+        }).then( e => { console.dir(e) });
     }
 }
 

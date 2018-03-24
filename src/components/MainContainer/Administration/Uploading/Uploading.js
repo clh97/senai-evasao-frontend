@@ -41,7 +41,7 @@ class Uploading extends Component {
 
                 <div className="principal__administration__uploading__uploadform">
                     <label htmlFor="file">Upload:</label>
-                    <input type="file" name="file" id="file"/>
+                    <input type="file" accept=".xlsx" name="file" id="file"/>
                 </div>
 
                 <div>

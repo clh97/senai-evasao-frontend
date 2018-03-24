@@ -39,7 +39,7 @@ class Portal extends Component {
     super();
 
     this.state = {
-      loggedIn: false,
+      loggedIn: true,
       errorMsg: undefined
     };
   }
