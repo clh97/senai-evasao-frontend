@@ -1,13 +1,9 @@
 import React, { Component, Fragment }       from 'react';
-import './Portal.css';
 import styled from 'styled-components';
 
-/* Resources */
-import logoSenai                  from './img/logo-senai.svg';
-
 /* Components */
-import LoginForm                  from './components/LoginForm/LoginForm';
-import MainContainer              from './components/MainContainer/MainContainer';
+import LoginForm                            from './components/LoginForm/LoginForm';
+import MainContainer                        from './components/MainContainer/MainContainer';
 
 const ErrorTag = styled.h3`
   position: sticky;
@@ -34,6 +30,15 @@ const CloseErrorButton = styled.button`
   background: #f6f6f6;
 `;
 
+const PortalComponent = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+`;
+
 class Portal extends Component {
   constructor() {
     super();
@@ -51,15 +56,14 @@ class Portal extends Component {
         {
           this.state.errorMsg && <ErrorTag>{this.state.errorMsg}<CloseErrorButton onClick={ () => this.disposeErrorMessage() }></CloseErrorButton></ErrorTag>
         }
-        <img className="logo" src={ logoSenai } alt="SENAI"/>
-        <div className="portal animated fadeIn">
+        <PortalComponent className="animated fadeIn">
           {
             this.state.loggedIn ?
             <MainContainer logout={ () => this.setState({loggedIn: false}) } /> :
             <LoginForm authenticateUser={ () => this.handleAuthenticationSuccess() }
                        authenticationFail={ (msg) => this.handleAuthenticationFail(msg) } />
           }
-        </div>
+        </PortalComponent>
       </Fragment>
     );
   }

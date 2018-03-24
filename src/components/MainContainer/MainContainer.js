@@ -1,5 +1,6 @@
 import React, { Component }             from 'react';
-import { Route, Switch, withRouter }    from 'react-router-dom'
+import { Route, Switch, withRouter }    from 'react-router-dom';
+import styled                           from 'styled-components';
 
 /* Components */
 import Administration                   from './Administration/Administration';
@@ -7,10 +8,17 @@ import Home                             from './Home/Home';
 import Statistics                       from './Statistics/Statistics';
 import TabSelector                      from './TabSelector/TabSelector';
 
-import './MainContainer.css';
+const Principal = styled.main`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  margin: 1rem;
+`;
 
-const RouteSwitcher = withRouter( ({ history }) => {
-    return <TabSelector handleRoute={ route => history.push(route) }/>
+const RouteSwitcher = withRouter( ({ history, logout }) => {
+    return <TabSelector logoutAction={ () => logout() } handleRoute={ route => history.push(route) }/>
 } );
 
 class MainContainer extends Component {
@@ -18,17 +26,15 @@ class MainContainer extends Component {
     render() {
         const informations = this.requestInformations();
         return (
-            <main className="principal">
-                <button className="principal__logout" onClick={ () => this.props.logout() }>Logout</button>
-                <RouteSwitcher />
+            <Principal>
+                <RouteSwitcher logout={() => this.props.logout()} />
                 <Switch>
                     <Route exact path="/" render={ () => <Home info={informations} /> } />
-
                     <Route path="/home" render={ () => <Home info={informations} /> } />
                     <Route path="/administracao" render={ () => <Administration /> } />
                     <Route path="/estatisticas" component={Statistics} />
                 </Switch>
-            </main>
+            </Principal>
         );
     }
 

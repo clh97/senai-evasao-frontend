@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component }     from 'react';
+import styled                   from 'styled-components';
 
 import AddCourse                from './AddCourse/AddCourse';
 import Classes                  from './Classes/Classes';
@@ -12,18 +13,21 @@ import { API_UPLOAD_URL }       from '../../../data_types/ApiData';
 import './Administration.css';
 
 
+const AdministrationContainer = styled.div`
+  width: 65vw;
+  padding: 20px;
+`;
+
 class Administration extends Component {
     /* -- LIFECYCLE METHODS -- */
     render() {
         return (
-            <div className="principal__administration">
-
+            <AdministrationContainer>
                 <ExpandableContainer render={<StudentList />} title={"Lista de Alunos"} />
                 <ExpandableContainer render={<AddCourse />} title={"Adicionar Curso"} />
                 <ExpandableContainer render={<Classes />} title={"Administração de Classes"} />
                 <ExpandableContainer render={<Uploading handleUploadInformation={ e => this.handleUpload(e) } />} title={"Upload de Tabelas"} />
-                
-            </div>
+            </AdministrationContainer>
         );
     }
 

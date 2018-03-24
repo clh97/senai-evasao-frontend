@@ -1,5 +1,38 @@
-import React, { Component } from 'react';
-import './TabSelector.css'
+import React, { Component }       from 'react';
+import styled                     from 'styled-components';
+
+/* Resources */
+import logoSenai                  from '../../../img/logo-senai.svg';
+
+const Logo = styled.img`
+  width: 120px;
+  margin-left: 2rem;
+`;
+
+const TabSelectorContainer = styled.div`
+  position: sticky;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 10vh;
+  background: var(--darker-bg);
+`;
+
+const TabSelectorButton = styled.button`
+  padding: 8px 20px;
+  display: inline-block;
+  appearance: none;
+  background: none;
+  border: none;
+  outline: none;
+  color: white;
+`;
+
+const LogoutButton = styled.button`
+  min-height: 40px;
+`;
+
 class TabSelector extends Component {
     constructor(props) {
         super(props);
@@ -12,14 +45,28 @@ class TabSelector extends Component {
     /* -- LIFECYCLE METHODS -- */
     render() {
         return (
-            <div className="principal__tab-selector">
-                <button className="principal__tab-selector__home" onClick={() => { this.setState({selectedRoute: 'home'}, () => this.updateRoute()); }
-                }>Home</button>
-                <button className="principal__tab-selector__administration" onClick={() => { this.setState({selectedRoute: 'administracao'}, () => this.updateRoute()); }
-                }>Administração</button>
-                <button className="principal__tab-selector__statistics" onClick={() => { this.setState({selectedRoute: 'estatisticas'}, () => this.updateRoute()); }
-                }>Estatísticas</button>
-            </div>
+            <TabSelectorContainer>
+
+                <Logo src={logoSenai}></Logo>
+
+                <TabSelectorButton onClick={() => { this.setState({selectedRoute: 'home'}, () => this.updateRoute()); }}>
+                  Home
+                </TabSelectorButton>
+
+                <TabSelectorButton onClick={() => { this.setState({selectedRoute: 'administracao'}, () => this.updateRoute()); }}>
+                  Administração
+                </TabSelectorButton>
+
+                <TabSelectorButton onClick={() => { this.setState({selectedRoute: 'estatisticas'}, () => this.updateRoute()); }}>
+                  Estatísticas
+                </TabSelectorButton>
+
+                <LogoutButton onClick={() => this.props.logoutAction()}>
+                  Logout
+                </LogoutButton>
+
+                
+            </TabSelectorContainer>
         )
     }
 
