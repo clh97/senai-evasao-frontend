@@ -8,6 +8,9 @@
   --default-bg: #6B1E95;
   --medium-bg: #5C1A7F;
   --darker-bg: #2E0D40;
+
+  --red-student: rgba(232, 44, 12, .65);
+  --yellow-student: rgba(255, 178, 0, .65);
 }
 
 body {

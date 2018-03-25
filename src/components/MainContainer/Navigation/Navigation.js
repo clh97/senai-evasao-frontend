@@ -1,7 +1,7 @@
 import React, { Component }       from 'react';
 import styled                     from 'styled-components';
 
-/* Resources */
+/* RESOURCES */
 import logoSenai                  from '../../../img/logo-senai.svg';
 
 const Logo = styled.img`

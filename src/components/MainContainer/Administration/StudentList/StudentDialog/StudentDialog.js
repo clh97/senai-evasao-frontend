@@ -42,10 +42,10 @@ class StudentDialog extends Component {
             
                 <StudentPhoto src={this.props.photoUrl ? this.props.photoUrl : 'http://placehold.it/320x320/'} alt="" />
 
-                <StudentName>{this.props.studentName}</StudentName>
+                <StudentName>{this.props.student.name}</StudentName>
 
                 <StudentInformations>
-
+                    
                 </StudentInformations>
 
             </StudentDialogContainer>

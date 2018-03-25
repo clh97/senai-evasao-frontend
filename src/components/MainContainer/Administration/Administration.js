@@ -68,12 +68,6 @@ class Administration extends Component {
         return (
             <AdministrationContainer>
               <Menu title="Administração" onDisplayChange={ e => this.handleDisplayChange(e) } items={menuItems}/>
-              {/*
-                  <ExpandableContainer render={<StudentList />} title={"Lista de Alunos"} />
-                  <ExpandableContainer render={<AddCourse />} title={"Adicionar Curso"} />
-                  <ExpandableContainer render={<Classes />} title={"Administração de Classes"} />
-                  <ExpandableContainer render={<Uploading handleUploadInformation={ e => this.handleUpload(e) } />
-              */}
               {
                 this.displayComponent()
               }

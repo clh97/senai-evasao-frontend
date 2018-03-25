@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
 import styled               from 'styled-components';
-import './LoginForm.css';
 
 import { API_LOGIN_URL }    from '../../data_types/ApiData';
+
+/* RESOURCES */
+import logoSenai                  from '../../img/logo-senai.svg';
+
+const Logo = styled.img`
+  min-width: 240px;
+  max-width: 240px;
+  margin: 2rem 0;
+`;
 
 const LoginFormComponent = styled.form`
   display: flex;
@@ -16,6 +24,7 @@ class LoginForm extends Component {
     render() {
         return (
             <LoginFormComponent onSubmit={e => this.handleLoginEvent(e)}>
+            <Logo src={logoSenai}/>
                 <input type="text" name="username" placeholder="Usuário" autoFocus/>
                 <input type="password" name="password" placeholder="Senha" />
                 <button type="submit">Login</button>
