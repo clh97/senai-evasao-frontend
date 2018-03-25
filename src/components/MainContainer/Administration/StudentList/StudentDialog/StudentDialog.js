@@ -29,7 +29,7 @@ const StudentName = styled.h2`
 const StudentInformations = styled.div`
     position: absolute;
     width: 100%;
-    height: 470px;
+    height: 480px;
     background: var(--darker-bg);
     top: 128px;
 `;

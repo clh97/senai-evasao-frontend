@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import './EditableList.css';
+import styled               from 'styled-components';
+/*import './EditableList.css';*/
 
-const EditableListItem = ({id, content, action, buttonText, onClickAction}) => (
-    <li key={id} onClick={ e => {e.preventDefault();  onClickAction() } }>
+const EditableListItem = ({id, content, action, buttonText}) => (
+    <li key={id}>
         <span>{(content instanceof String) ? content.name : content }</span>
         {
-            buttonText === '' ? <button onClick={action}>{buttonText}</button> : undefined
+            action ? <button onClick={action}>{buttonText}</button> : undefined
         }
     </li>
 );
@@ -19,23 +20,83 @@ const EditableListAdd = ({onAddItem}) => (
     </li>
 );
 
+const EditableListContainer = styled.div`
+  width: 100%;
+  margin: 0;
+  padding: 0;
+`;
+
+const EditableListComponent = styled.ul`
+  padding: 0;
+  margin: 1rem;
+  color: white;
+
+  &:hover {
+    cursor: default;
+  }
+
+  & > li {
+    width: 100%;
+    height: 60px;
+    margin: .5rem 0;
+    list-style: none;
+    border: 1px solid rgba(255, 255, 255, .30);
+  }
+
+  & > li > span {
+    display: inline-block;
+    width: 90%;
+    height: 100%;
+    line-height: 60px;
+  }
+
+  & > li > button, & > li > form > button {
+    float: right;
+    width: 10%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    outline: none;
+    transition: background-color .5s;
+    background-color: transparent;
+    color: white;
+    cursor: pointer;
+  }
+
+  & > li > button:hover, & > li > form > button:hover {
+    background-color: rgba(255, 255, 255, .20);
+  }
+
+  & > li > button::-moz-focus-inner {
+    border: 0;
+  }
+
+  & > li > form {
+    align-items: center;
+    line-height: 50px;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+  }
+`;
+
 class EditableList extends Component {
     render() {
         return (
-            <div className="editable">
-                <ul className="editable__list">
+            <EditableListContainer>
+                <EditableListComponent>
                     {
                         this.props.items.map(item => {
                             const { id, name } = item;
                             return <EditableListItem key={id} content={name} action={ e => this.props.onDeleteItem ? this.props.onDeleteItem(id) : undefined } buttonText={this.props.buttonText ? this.props.buttonText : 'DEL' } onClickAction={ () => this.props.onClickAction ? this.props.onClickAction() : undefined } />
-                        }
-                    )
+                        })
                     }
                     {
                         this.props.withoutAdd ? undefined : <EditableListAdd id={this.props.items.length} onAddItem={this.props.onAddItem} />
                     }
-                </ul>
-            </div>
+                </EditableListComponent>
+            </EditableListContainer>
         )
     }
 }

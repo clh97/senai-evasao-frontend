@@ -32,25 +32,25 @@ const menuItems = [
   {
     idNum: 0,
     id: 'studentList',
-    title: 'Lista de Alunos',
+    title: 'Alunos',
     faIcon: faUser
   },
   {
     idNum: 1,
     id: 'addCourse',
-    title: 'Adicionar Curso',
+    title: 'Cursos',
     faIcon: faGraduationCap
   },
   {
     idNum: 2,
     id: 'classes',
-    title: 'Classes',
+    title: 'Turmas',
     faIcon: faNewspaper
   },
   {
     idNum: 3,
     id: 'uploading',
-    title: 'Upload de Tabelas',
+    title: 'Upload',
     faIcon: faUpload
   }
 ]

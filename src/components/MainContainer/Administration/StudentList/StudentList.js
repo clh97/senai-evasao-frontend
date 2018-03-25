@@ -7,16 +7,16 @@ import StudentDialog        from './StudentDialog/StudentDialog';
 
 const modalStyles = {
   content : {
-      width                 : '800px',
-      height                : '600px',
-      top                   : '50%',
-      left                  : '50%',
-      right                 : 'auto',
-      bottom                : 'auto',
-      marginRight           : '-50%',
-      transform             : 'translate(-50%, -50%)',
-      background            : 'var(--default-bg)',
-      padding               : '0'
+    display               : 'block',
+    margin                : '10rem auto',
+    width                 : '800px',
+    height                : '600px',
+    background            : 'var(--default-bg)',
+    padding               : '0',
+    overflowY             : 'hidden',
+    overflowX             : 'hidden',
+    border                : 'none',
+    outline               : '0'
   }
 };
 
@@ -27,12 +27,13 @@ const StudentListContainer = styled.ul`
 `;
 
 const StudentListItem = styled.li`
+  position: relative;
   display: flex;
-  justify-content: center;
   align-items: center;
-  width: 60%;
+  width: 65%;
   height: 80px;
   margin: .33rem 0;
+  padding: 6px;
   text-transform: uppercase;
   font-weight: 700;
   border-radius: 4px;
@@ -45,6 +46,29 @@ const StudentListItem = styled.li`
   &:hover {
     box-shadow: inset 0 0 3px black;
   }
+`;
+
+const StudentListItemPhoto = styled.img`
+  height: 64px;
+  border-radius: 4px;
+  margin-right: 3rem;
+`;
+
+const StudentListItemText = styled.span`
+  position: absolute;
+  width: 60%;
+  left: 120px;
+  top: 24px;
+  text-align: left;
+`;
+
+const StudentListItemDescription = styled.span`
+  position: absolute;
+  width: 60%;
+  left: 128px;
+  top: 44px;
+  text-align: left;
+  font-size: .8rem;
 `;
 
 class StudentList extends Component {
@@ -68,7 +92,7 @@ class StudentList extends Component {
             } )
           }
 
-          <Modal isOpen={this.state.dialogIsOpen} onRequestClose={this.closeDialog} contentLabel={'Aluno'} style={modalStyles}>
+          <Modal style={modalStyles} className='animated fadeInDown' isOpen={this.state.dialogIsOpen} onRequestClose={this.closeDialog} contentLabel={'Aluno'}>
               <StudentDialog student={this.state.currentStudent} />
           </Modal>
         </StudentListContainer>
@@ -83,6 +107,7 @@ class StudentList extends Component {
           ra: '123456789',
           name: 'michel calheiros',
           evaded: false,
+          photoUrl: 'http://placehold.it/128x128',
           alerts: [
             {
               id: 0,
@@ -103,6 +128,7 @@ class StudentList extends Component {
           ra: '987654321',
           name: 'gordo dados',
           evaded: false,
+          photoUrl: 'http://placehold.it/128x128',
           alerts: [
             {
               id: 1,
@@ -130,9 +156,12 @@ class StudentList extends Component {
     }
 
     generateListItem = ( student ) => {
+      let alertLevel = this.defineStudentAlertLevel(student);
       return (
-        <StudentListItem key={student.id} background={`var(${this.defineStudentAlertLevel(student)});`} onClick={ () => this.openDialog(student) }>
-          {student.name}
+        <StudentListItem key={student.id} background={`var(${alertLevel});`} onClick={ () => this.openDialog(student) }>
+          <StudentListItemPhoto src={student.photoUrl}/>
+          <StudentListItemText>{student.name}</StudentListItemText>
+          <StudentListItemDescription><strong>RA: </strong>{student.ra}</StudentListItemDescription>
         </StudentListItem>
       )
     }

@@ -85,7 +85,15 @@ a {
 /* MODIFICAÇÃO PARA O OVERLAY DO COMPONENTE MODAL */
 .ReactModal__Content {
   border: none !important;
+  cursor: default;
 }
+
+.ReactModal__Content::-moz-focus-inner {
+  border: none !important;
+}
+
 .ReactModal__Overlay {
   background: rgba(0, 0, 0, .85) !important;
+  cursor: pointer;
+  z-index: 0;
 }

@@ -17,10 +17,8 @@ class Classes extends Component {
         return (
             <div className="principal__administration__classes">
 
-                <h2 className="principal__administration__classes__title">Lista de Classes</h2>
                 <EditableList items={ this.state.classes } rightButton={true} onDeleteItem={ e => this.handleDeleteClass(e) } withoutAdd={true} />
 
-                <h2 className="principal__administration__classes__title">Adicionar Classe</h2>
                 <AddClass handleNewClass={ e => this.handleAddClass(e) }/>
 
             </div>
