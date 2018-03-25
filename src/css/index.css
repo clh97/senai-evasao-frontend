@@ -6,10 +6,13 @@
 
 :root {
   --default-bg: #6B1E95;
-  --darker-bg: #370F4C;
+  --medium-bg: #5C1A7F;
+  --darker-bg: #2E0D40;
 }
 
 body {
+  margin: 0;
+  
   text-align: center;
   
   font-family: 'Montserrat', sans-serif;
@@ -18,8 +21,6 @@ body {
   color: white;
   background: var(--default-bg);
 }
-
-
 
 ::-webkit-scrollbar { 
   display: none; 
@@ -56,7 +57,6 @@ button {
   border-radius: 4px;
 }
 
-
 select {
   padding: 12px 8px;
   
@@ -77,4 +77,12 @@ a {
   display: block;
   text-decoration: none;
   color: white;
+}
+
+/* MODIFICAÇÃO PARA O OVERLAY DO COMPONENTE MODAL */
+.ReactModal__Content {
+  border: none !important;
+}
+.ReactModal__Overlay {
+  background: rgba(0, 0, 0, .85) !important;
 }

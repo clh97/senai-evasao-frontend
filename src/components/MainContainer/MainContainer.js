@@ -6,7 +6,7 @@ import styled                           from 'styled-components';
 import Administration                   from './Administration/Administration';
 import Home                             from './Home/Home';
 import Statistics                       from './Statistics/Statistics';
-import TabSelector                      from './TabSelector/TabSelector';
+import Navigation                      from './Navigation/Navigation';
 
 const Principal = styled.main`
   display: flex;
@@ -14,11 +14,10 @@ const Principal = styled.main`
   align-items: center;
   width: 100%;
   height: 100vh;
-  margin: 1rem;
 `;
 
 const RouteSwitcher = withRouter( ({ history, logout }) => {
-    return <TabSelector logoutAction={ () => logout() } handleRoute={ route => history.push(route) }/>
+    return <Navigation logoutAction={ () => logout() } handleRoute={ route => history.push(route) }/>
 } );
 
 class MainContainer extends Component {

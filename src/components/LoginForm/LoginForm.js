@@ -1,16 +1,25 @@
 import React, { Component } from 'react';
+import styled               from 'styled-components';
 import './LoginForm.css';
 
 import { API_LOGIN_URL }    from '../../data_types/ApiData';
 
+const LoginFormComponent = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2rem 0;
+  padding: 20px;
+`;
+
 class LoginForm extends Component {
     render() {
         return (
-            <form className="portal__login" onSubmit={e => this.handleLoginEvent(e)}>
+            <LoginFormComponent onSubmit={e => this.handleLoginEvent(e)}>
                 <input type="text" name="username" placeholder="Usuário" autoFocus/>
                 <input type="password" name="password" placeholder="Senha" />
-                <button className="portal__login__login-button" type="submit">Login</button>
-            </form>
+                <button type="submit">Login</button>
+            </LoginFormComponent>
         );
     }
 
