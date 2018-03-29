@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import styled               from 'styled-components';
 
+import EditableList         from '../../../../EditableList/EditableList';
+
 const StudentDialogContainer = styled.div`
     display: block;
     width: 100%;
@@ -34,18 +36,23 @@ const StudentInformations = styled.div`
     top: 128px;
 `;
 
-
 class StudentDialog extends Component {
     render() {
+        const { student } = this.props;
+        const { annotations } = student;
+        const formattedAnnotationsList = annotations.map( (alert) => {
+            return {id: alert.id, name: alert.annotation}
+        } );
+
         return (
             <StudentDialogContainer>
             
-                <StudentPhoto src={this.props.photoUrl ? this.props.photoUrl : 'http://placehold.it/320x320/'} alt="" />
+                <StudentPhoto src={student.photoUrl ? student.photoUrl : 'http://placehold.it/320x320/'} alt="" />
 
-                <StudentName>{this.props.student.name}</StudentName>
+                <StudentName>{student.name}</StudentName>
 
                 <StudentInformations>
-                    
+                    <EditableList items={formattedAnnotationsList} />
                 </StudentInformations>
 
             </StudentDialogContainer>

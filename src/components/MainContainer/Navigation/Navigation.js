@@ -19,6 +19,7 @@ const NavigationContainer = styled.div`
   width: 100%;
   height: 80px;
   background: var(--darker-bg);
+  z-index: 3;
 
   *:first-child, *:last-child {
     margin: 0 3rem;

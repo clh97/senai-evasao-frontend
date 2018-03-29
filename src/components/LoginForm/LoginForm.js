@@ -63,6 +63,7 @@ class LoginForm extends Component {
                 break;
             }
         } ));
+        /* TODO: ADICIONAR CATCH */
     }
 }
 

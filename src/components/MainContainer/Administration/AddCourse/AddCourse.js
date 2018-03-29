@@ -18,7 +18,7 @@ class AddCourse extends Component {
         return (
             <div className="principal__administration__add-course">
                 {
-                    <EditableList items={this.state.courses} rightButton={true} onDeleteItem={ e => this.handleDeleteCourse(e) } onAddItem={ e => this.handleNewCourse(e) } />
+                    <EditableList items={this.state.courses} rightButton={true} onDeleteItem={ e => this.handleDeleteCourse(e) } onAddItem={ e => this.handleNewCourse(e) } addButton={true} />
                 }
             </div>
         )

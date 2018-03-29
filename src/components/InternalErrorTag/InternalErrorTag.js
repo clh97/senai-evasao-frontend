@@ -3,7 +3,7 @@ import styled         from 'styled-components';
 import FontAwesome    from '@fortawesome/react-fontawesome';
 import faError        from '@fortawesome/fontawesome-free-solid/faExclamationTriangle';  
 
-const ErrorContainer = styled.div`
+const InternalErrorContainer = styled.div`
   display: block;
   width: 60%;
   height: 22px;
@@ -11,20 +11,20 @@ const ErrorContainer = styled.div`
   background: orange;
 `;
 
-const ErrorTag = styled.h4`
+const InternalErrorTag = styled.h4`
   display: inline-block;
   margin: 0 1rem;
   color: white;
 `;
 
-const ErrorIconStyle = {
+const internalErrorIconStyle = {
   display:    'inline-block'
 }
 
 
 export default (props) => (
-<ErrorContainer>
-  <FontAwesome style={ErrorIconStyle} icon={faError} />
-  <ErrorTag>{props.msg}</ErrorTag>
-</ErrorContainer>
+<InternalErrorContainer>
+  <FontAwesome style={internalErrorIconStyle} icon={faError} />
+  <InternalErrorTag>{props.msg}</InternalErrorTag>
+</InternalErrorContainer>
 );

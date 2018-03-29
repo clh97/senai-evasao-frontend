@@ -5,6 +5,8 @@ import styled               from 'styled-components';
 /*import EditableList         from '../../../EditableList/EditableList';*/
 import StudentDialog        from './StudentDialog/StudentDialog';
 
+import { API_STUDENTS_URL } from '../../../../data_types/ApiData';
+
 const modalStyles = {
   content : {
     display               : 'block',
@@ -83,13 +85,12 @@ class StudentList extends Component {
     }
     /* -- LIFECYCLE METHODS -- */
     render() {
+      this.fetchStudents();
       return (
         <StudentListContainer>
 
           {
-            this.state.students.map( student => {
-              return this.generateListItem(student)
-            } )
+            this.state.students.map( student => this.generateListItem(student))
           }
 
           <Modal style={modalStyles} className='animated fadeInDown' isOpen={this.state.dialogIsOpen} onRequestClose={this.closeDialog} contentLabel={'Aluno'}>
@@ -118,9 +119,15 @@ class StudentList extends Component {
               date: '00/00/00'
             }
           ],
-          anotations: [
-            'aluno impiedosamente come dois lanches no intervalo',
-            'insatisfeito com a vida pq (ainda) não trabalha com React'
+          annotations: [
+            {
+              id: 0,
+              annotation: 'aluno impiedosamente come dois lanches no intervalo'
+            },
+            {
+              id: 1,
+              annotation: 'insatisfeito com a vida pq (ainda) não trabalha com React'
+            }
           ]
         },
         {
@@ -139,12 +146,24 @@ class StudentList extends Component {
               date: '00/00/00'
             }
           ],
-          anotations: [
-            'aluno com caspa',
-            'come nuggets'
+          annotations: [
+            {
+              id: 0,
+              content: 'aluno com caspa'
+            },
+            {
+              id: 1,
+              content: 'come nuggets'
+            }
           ]
         }
       ];
+    }
+
+    fetchStudents = () => {
+      fetch(API_STUDENTS_URL).then(response => response.json().then( data => {
+        console.dir(data);
+      } ));
     }
 
     openDialog = (student) => {

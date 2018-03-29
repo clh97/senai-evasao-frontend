@@ -1,54 +1,65 @@
 import React, { Component } from 'react';
+import styled               from 'styled-components';
 
 import AddClass             from './AddClass/AddClass';
-import EditableList         from '../../../EditableList/EditableList';
+import ClassList            from './ClassList/ClassList';
+
+import { API_CLASS_URL }    from '../../../../data_types/ApiData';
+import Class                from '../../../../data_types/Class';
+
+const ClassesContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
 
 class Classes extends Component {
     constructor() {
         super();
 
         this.state = {
-            classes: this.getClasses()
+            classes: undefined
         }
     }
 
     /* -- LIFECYCLE -- */
     render() {
         return (
-            <div className="principal__administration__classes">
+            <ClassesContainer>
 
-                <EditableList items={ this.state.classes } rightButton={true} onDeleteItem={ e => this.handleDeleteClass(e) } withoutAdd={true} />
+                <ClassList items={ this.state.classes } onDeleteItem={id => this.handleDeleteClass(id)} />
 
                 <AddClass handleNewClass={ e => this.handleAddClass(e) }/>
 
-            </div>
+            </ClassesContainer>
         );
     }
 
-    /* -- CUSTOM -- */
-    getClasses = () => {
-        return [
-            {
-                id: 0,
-                course: 'Técnico em Informática',
-                semester: '4',
-                period: 'TARDE',
-                name: `0 - Técnico em Informática -> TARDE`
-            },
-            {
-                id: 1,
-                course: 'Técnico em Redes',
-                semester: '4',
-                period: 'MANHÃ',
-                name: `1 - Técnico em Redes -> MANHÃ`
-            }
-        ];
+    componentDidMount() {
+        this.requestClasses();
     }
 
+    /* -- CUSTOM -- */
+
+    requestClasses = () => {
+        let classes = undefined;
+        fetch(API_CLASS_URL, {
+            headers: {
+                'content-type': 'application/json'
+            },
+			method: 'GET'
+        }).then( response => response.json().then( data => {
+            classes = data.map( item => new Class(item.id, undefined, item.nomeTurma, item.periodo, undefined))
+            this.setState({classes}, () => { console.dir(this.state.classes) });
+        }));
+    }
+    
     handleAddClass = e => {
         const { course, semester, period, name } = e.target;
         let newClasses = this.state.classes;
-        newClasses.push({id: this.state.classes.length, name: `${this.state.classes.length} - ${name.value} - ${course.value} -> ${period.value}`, course: course.value, semester: semester.value, period: period.value});
+        console.dir()
+        newClasses.push(new Class((this.state.classes.slice(-1).pop().id)+1, 1, name.value, period.value, semester.value));
         this.setState({classes: newClasses});
     }
 

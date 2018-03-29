@@ -10,9 +10,9 @@ class AddClassForm extends Component {
                 <div>
                     <label htmlFor="course">Curso:</label>
                     <select name="course" id="course">
-                        <option value="Técnico em Informática">Técnico em Informática</option>
-                        <option value="Técnico em Redes">Técnico em Redes</option>
-                        <option value="Técnico em Batatas">Técnico em Batatas</option>
+                        <option value="0">Técnico em Informática</option>
+                        <option value="1">Técnico em Redes</option>
+                        <option value="2">Técnico em Mecatrônica</option>
                     </select>
                 </div>
 
@@ -29,9 +29,9 @@ class AddClassForm extends Component {
                 <div>
                     <label htmlFor="period">Período:</label>
                     <select name="period" id="period">
-                        <option value="MANHÃ">MANHÃ</option>
-                        <option value="TARDE">TARDE</option>
-                        <option value="NOITE">NOITE</option>
+                        <option value="0">MANHÃ</option>
+                        <option value="1">TARDE</option>
+                        <option value="2">NOITE</option>
                     </select>
                 </div>
 
