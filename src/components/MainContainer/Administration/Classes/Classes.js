@@ -58,8 +58,9 @@ class Classes extends Component {
     handleAddClass = e => {
         const { course, semester, period, name } = e.target;
         let newClasses = this.state.classes;
-        console.dir()
-        newClasses.push(new Class((this.state.classes.slice(-1).pop().id)+1, 1, name.value, period.value, semester.value));
+        let newId;
+        newClasses.length !== 0 ? newId = (this.state.classes.slice(-1).pop().id)+1 : newId = 1;
+        newClasses.push(new Class(newId, 1, name.value, period.value, semester.value));
         this.setState({classes: newClasses});
     }
 

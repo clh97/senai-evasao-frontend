@@ -3,18 +3,6 @@ import styled               from 'styled-components';
 
 import InternalErrorTag from '../../../../InternalErrorTag/InternalErrorTag';
 
-const ClassListComponent = styled.ul`
-  display: block;
-  margin: 0 auto;
-  padding: 0;
-  list-style: none;
-`;
-
-const ClassListItem = styled.li`
-  margin: 0;
-  padding: 0;
-`;
-
 const ClassListItemTable = styled.table`
   display: flex;
   flex-direction: row;
@@ -51,50 +39,51 @@ const ClassListItemTBody = styled.tbody`
 
 const ClassListItemDeleteButton = styled.button`
   position: absolute;
-  top: -7px;
-  right: -32px;
-  width: 32px;
-  height: 22px;
+  height: 100%;
+  width: auto;
+  margin: 0;
   padding: 0;
-  border: 1px solid red;
+  right: 0;
+  top: 0;
   cursor: pointer;
-  background: transparent;
-  color: white;
-  border-radius: 0;
+
+  &:hover {
+    background: rgba(0, 0, 0, .65);
+  }
 `;
 
 class ClassList extends Component {
   render() {
     return (
-      <ClassListComponent>
         <ClassListItemTable>
-        <ClassListItemTBody>
+          <ClassListItemTBody>
 
-          <ClassListItemTableHeader>
-          <ClassListItemTableData>ID</ClassListItemTableData>
-          <ClassListItemTableData>Nome</ClassListItemTableData>
-          <ClassListItemTableData>Período</ClassListItemTableData>
-        </ClassListItemTableHeader>
+            <ClassListItemTableHeader>
+              <ClassListItemTableData>ID</ClassListItemTableData>
+              <ClassListItemTableData>Nome</ClassListItemTableData>
+              <ClassListItemTableData>Período</ClassListItemTableData>
+            </ClassListItemTableHeader>
 
-        {
-          this.props.items ?
-          this.props.items.map( item => {
-            return (
-              
-            <ClassListItemTableRow>
-              <ClassListItemTableData>{item.id}</ClassListItemTableData>
-              <ClassListItemTableData>{item.className}</ClassListItemTableData>
-              <ClassListItemTableData>{item.period}</ClassListItemTableData>
-              <ClassListItemDeleteButton onClick={() => { this.props.onDeleteItem(item.id) }}>x</ClassListItemDeleteButton>
-            </ClassListItemTableRow>
+            {
+              this.props.items ?
+              this.props.items.map( item => {
+                return (
+                  
+                <ClassListItemTableRow>
+                  <ClassListItemTableData>{item.id}</ClassListItemTableData>
+                  <ClassListItemTableData>{item.className}</ClassListItemTableData>
+                  <ClassListItemTableData>
+                    {item.period}
+                    <ClassListItemDeleteButton onClick={() => { this.props.onDeleteItem(item.id) }}>DEL</ClassListItemDeleteButton>
+                  </ClassListItemTableData>
+                </ClassListItemTableRow>
 
-            );
-          }) : <InternalErrorTag />
-        }
-        
-        </ClassListItemTBody>
+                );
+              }) : <InternalErrorTag />
+            }
+          
+          </ClassListItemTBody>
         </ClassListItemTable>
-      </ClassListComponent>
     );
   }
 }

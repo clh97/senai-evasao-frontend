@@ -1,11 +1,13 @@
-import React, { Component } from 'react';
-import Modal                from 'react-modal';
-import styled               from 'styled-components';
+import React, { Component }         from 'react';
+import Modal                        from 'react-modal';
+import styled                       from 'styled-components';
 
 /*import EditableList         from '../../../EditableList/EditableList';*/
-import StudentDialog        from './StudentDialog/StudentDialog';
+import StudentDialog                from './StudentDialog/StudentDialog';
 
-import { API_STUDENTS_URL } from '../../../../data_types/ApiData';
+import { API_STUDENTS_URL }         from '../../../../data_types/ApiData';
+import { associateStudentData }     from '../../../../data_types/Student';
+import InternalErrorTag from '../../../InternalErrorTag/InternalErrorTag';
 
 const modalStyles = {
   content : {
@@ -78,19 +80,19 @@ class StudentList extends Component {
       super(props);
 
       this.state = {
-        students: this.getStudents(),
+        students: this.fetchStudents(),
         currentStudent: undefined,
         dialogIsOpen: false
       }
     }
     /* -- LIFECYCLE METHODS -- */
     render() {
-      this.fetchStudents();
+      
       return (
         <StudentListContainer>
 
           {
-            this.state.students.map( student => this.generateListItem(student))
+            this.state.students ? this.state.students.map( student => this.generateListItem(student)) : <InternalErrorTag msg='Não foi possível obter os alunos.' />
           }
 
           <Modal style={modalStyles} className='animated fadeInDown' isOpen={this.state.dialogIsOpen} onRequestClose={this.closeDialog} contentLabel={'Aluno'}>
@@ -98,6 +100,10 @@ class StudentList extends Component {
           </Modal>
         </StudentListContainer>
       )
+    }
+
+    componentWillMount() {
+      
     }
 
     /* -- CUSTOM METHODS -- */
@@ -161,26 +167,28 @@ class StudentList extends Component {
     }
 
     fetchStudents = () => {
+      const students = [];
       fetch(API_STUDENTS_URL).then(response => response.json().then( data => {
-        console.dir(data);
-      } ));
+        data.forEach(student => {
+          students.push(associateStudentData(student));
+        })
+      })).then( () => this.setState({students}) );
     }
 
-    openDialog = (student) => {
-        this.setState({currentStudent: student, dialogIsOpen: true})
-    }
+    openDialog = (student) => this.setState({currentStudent: student, dialogIsOpen: true});
 
-    closeDialog = () => {
-        this.setState({dialogIsOpen: false})
-    }
+    closeDialog = () => this.setState({dialogIsOpen: false});
 
     generateListItem = ( student ) => {
-      let alertLevel = this.defineStudentAlertLevel(student);
+      let alertLevel;
+      student.alerts.length > 0 ? alertLevel = this.defineStudentAlertLevel(student) : alertLevel = '--darker-bg';
       return (
         <StudentListItem key={student.id} background={`var(${alertLevel});`} onClick={ () => this.openDialog(student) }>
-          <StudentListItemPhoto src={student.photoUrl}/>
+          {
+            student.photoUrl ? <StudentListItemPhoto src={student.photoUrl}/> : undefined
+          }
           <StudentListItemText>{student.name}</StudentListItemText>
-          <StudentListItemDescription><strong>RA: </strong>{student.ra}</StudentListItemDescription>
+          <StudentListItemDescription><strong>RA: </strong>{student.registration}</StudentListItemDescription>
         </StudentListItem>
       )
     }
@@ -189,7 +197,7 @@ class StudentList extends Component {
       let color = '--medium-bg';
       let levels = [];
       student.alerts.forEach( alert => {
-        levels.push(alert.nivel);
+        levels.push(alert.nivelPrioridade);
       })
       let max = levels.reduce((a, b) => Math.max(a, b));
       max === 1 ? color = '--yellow-student' : color = '--red-student';
