@@ -32,9 +32,17 @@ const StudentInformations = styled.div`
     position: absolute;
     width: 100%;
     height: 480px;
+    padding: 30px 60px;
     background: var(--darker-bg);
     top: 128px;
     overflow-y: scroll;
+`;
+
+const Title = styled.h3`
+  margin: 0;
+  padding: 0 20px;
+  text-align: left;
+  color: white;
 `;
 
 class StudentDialog extends Component {
@@ -56,6 +64,7 @@ class StudentDialog extends Component {
                 <StudentName>{student.name}</StudentName>
 
                 <StudentInformations>
+                    <Title>Anotações</Title>
                     <EditableList items={this.adaptAnnotations(this.state.annotations)} addButton={true} onAddItem={e => this.addAnnotation(e.target.name.value)} onDeleteItem={ id => this.deleteAnnotation(id) } />
                 </StudentInformations>
 
@@ -64,18 +73,19 @@ class StudentDialog extends Component {
     }
 
     /* CUSTOM METHODS */
-    addAnnotation = ( annotationText) => {
-        const { annotations, id } = this.state.student;
+    addAnnotation = annotationText => {
+        const { id } = this.state.student;
+        let annotations = this.state.annotations;
         let newAnnotations = annotations;
-        this.state.annotations.length > 0 ? this.newId = (this.state.annotations.slice(-1).pop().id)+1 : this.newId = 0;
+        annotations.length > 0 ? this.newId = (annotations.slice(-1).pop().id)+1: this.newId = 0;
         newAnnotations.push({ alunoId: id, id: this.newId, mensagem: annotationText });
-        this.setState({annotations: newAnnotations})
+        this.setState({annotations}, () => this.props.updateAnnotations(newAnnotations))
     }
-
+    
     deleteAnnotation = id => {
-        /* TODO: ARRUMAR DELETEANNOTATION NO STUDENTDIALOG */
-        let newAnnotations = this.state.annotations.filter(item => item.id !== id);
-        this.setState({annotations: newAnnotations});
+        let { annotations } = this.state;
+        let newAnnotations = annotations.filter(item => item.id !== id)
+        this.setState({annotations: newAnnotations}, () => this.props.updateAnnotations(newAnnotations));
     }
 
     adaptAnnotations = ( list ) => {

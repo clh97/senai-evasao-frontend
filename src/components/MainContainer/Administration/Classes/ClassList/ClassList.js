@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled               from 'styled-components';
 
-import InternalErrorTag from '../../../../InternalErrorTag/InternalErrorTag';
+import Loading              from '../../../../Loading/Loading';
 
 const ClassListItemTable = styled.table`
   display: flex;
@@ -79,7 +79,7 @@ class ClassList extends Component {
                 </ClassListItemTableRow>
 
                 );
-              }) : <InternalErrorTag />
+              }) : (<ClassListItemTableRow><Loading /></ClassListItemTableRow>)
             }
           
           </ClassListItemTBody>

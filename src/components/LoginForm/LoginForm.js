@@ -20,13 +20,26 @@ const LoginFormComponent = styled.form`
   padding: 20px;
 `;
 
+const ErrorMessage = styled.h3`
+  color: red;
+  font-size: 1rem;
+`;
+
 class LoginForm extends Component {
+    constructor() {
+        super();
+
+        this.state = {
+            errorMessage: undefined
+        }
+    }
     render() {
         return (
             <LoginFormComponent onSubmit={e => this.handleLoginEvent(e)}>
             <Logo src={logoSenai}/>
                 <input type="text" name="username" placeholder="Usuário" autoFocus/>
                 <input type="password" name="password" placeholder="Senha" />
+                { this.state.errorMessage ? <ErrorMessage>{this.state.errorMessage}</ErrorMessage> : undefined }
                 <button type="submit">Login</button>
             </LoginFormComponent>
         );
@@ -34,6 +47,8 @@ class LoginForm extends Component {
 
     handleLoginEvent = (event) => {
         event.preventDefault();
+
+        this.setState({errorMessage: undefined});
         
         const { username, password } = event.target;
 
@@ -55,15 +70,21 @@ class LoginForm extends Component {
                 break;
                 
                 case false:
+                    this.showErrorMessage('Erro de autenticação.');
                     this.props.authenticationFail(data.message);
                 break;
             
                 default:
+                    this.showErrorMessage('Erro de autenticação.');
                     this.props.authenticationFail(data.message);
                 break;
             }
         } ));
         /* TODO: ADICIONAR CATCH */
+    }
+
+    showErrorMessage = msg => {
+        this.setState({errorMessage: msg})
     }
 }
 

@@ -82,6 +82,10 @@ a {
   color: white;
 }
 
+input::placeholder {
+  color: rgba(255, 255, 255, .5);
+}
+
 /* MODIFICAÇÃO PARA O OVERLAY DO COMPONENTE MODAL */
 .ReactModal__Content {
   border: none !important;
@@ -96,4 +100,13 @@ a {
   background: rgba(0, 0, 0, .85) !important;
   cursor: pointer;
   z-index: 0;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

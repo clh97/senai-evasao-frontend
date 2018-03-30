@@ -15,7 +15,7 @@ const UploadingForm = styled.form`
   }
 `;
 
-const LineSeparator = styled.div`
+const LineBlock = styled.div`
   display: block;
   width: 100%;
   margin: 2rem 0;
@@ -55,7 +55,7 @@ class Uploading extends Component {
         return (
             <UploadingForm action="submit" onSubmit={ e => { e.preventDefault(); this.props.handleUploadInformation(e); } }>
             
-                  <LineSeparator>
+                  <LineBlock>
                     <label htmlFor="tableType">Tipo de tabela:</label>
 
                     <RadioFileTypeSelector id="presenca" name="selector" value="presenca" defaultChecked/>
@@ -66,9 +66,9 @@ class Uploading extends Component {
                     
                     <RadioFileTypeSelector id="na" name="selector" value="na" />
                     <label for="na">Não sei</label>
-                  </LineSeparator>
+                  </LineBlock>
 
-                  <LineSeparator>
+                  <LineBlock>
                     <label htmlFor="class">Turma:</label>
 
                     <select name="class" id="class">
@@ -78,14 +78,14 @@ class Uploading extends Component {
                         } )
                       }
                     </select>
-                  </LineSeparator>
+                  </LineBlock>
 
-                  <LineSeparator>
+                  <LineBlock>
                     <label htmlFor="date">Data:</label>
                     <DateSelector name="date" id="date" />
-                  </LineSeparator>
+                  </LineBlock>
                   
-                  <LineSeparator>
+                  <LineBlock>
                     <label htmlFor="course">Matéria:</label>
                     <select name="class" id="class">
                       {
@@ -94,12 +94,12 @@ class Uploading extends Component {
                         } )
                       }
                     </select>
-                  </LineSeparator>
+                  </LineBlock>
                   
-                  <LineSeparator>
+                  <LineBlock>
                     <label htmlFor="file">Upload:</label>
                     <FileSelector type="file" accept=".xlsx" name="file" id="file"/>
-                  </LineSeparator>
+                  </LineBlock>
 
                     <button type="submit">
                         Enviar

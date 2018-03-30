@@ -4,10 +4,12 @@ import styled                       from 'styled-components';
 
 /*import EditableList         from '../../../EditableList/EditableList';*/
 import StudentDialog                from './StudentDialog/StudentDialog';
+import Loading                      from '../../../Loading/Loading';
 
 import { API_STUDENTS_URL }         from '../../../../data_types/ApiData';
 import { associateStudentData }     from '../../../../data_types/Student';
-import InternalErrorTag from '../../../InternalErrorTag/InternalErrorTag';
+
+
 
 const modalStyles = {
   content : {
@@ -92,11 +94,11 @@ class StudentList extends Component {
         <StudentListContainer>
 
           {
-            this.state.students ? this.state.students.map( student => this.generateListItem(student)) : <InternalErrorTag msg='Não foi possível obter os alunos.' />
+            this.state.students ? this.state.students.map( student => this.generateListItem(student)) : <Loading />/*<InternalErrorTag msg='Não foi possível obter os alunos.' />*/
           }
 
           <Modal style={modalStyles} className='animated fadeInDown' isOpen={this.state.dialogIsOpen} onRequestClose={this.closeDialog} contentLabel={'Aluno'}>
-              <StudentDialog student={this.state.currentStudent} />
+              <StudentDialog student={this.state.currentStudent} updateAnnotations={annotations => this.handleAnnotationUpdate(annotations) } />
           </Modal>
         </StudentListContainer>
       )
@@ -204,6 +206,11 @@ class StudentList extends Component {
       return color;
     }
 
+    handleAnnotationUpdate = ( newAnnotations ) => {
+      let student = this.state.currentStudent;
+      student.annotations = newAnnotations;
+      this.setState({currentStudent: student});
+    }
 }
 
 export default StudentList;
