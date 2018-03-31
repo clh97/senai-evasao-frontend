@@ -28,9 +28,9 @@ class Classes extends Component {
         return (
             <ClassesContainer>
 
-                <ClassList items={ this.state.classes } onDeleteItem={id => this.handleDeleteClass(id)} />
+                <ClassList items={ this.state.classes }  onDeleteItem={ id => this.handleDeleteClass(id) } />
 
-                <AddClass handleNewClass={ e => this.handleAddClass(e) }/>
+                <AddClass classes={ this.state.classes } handleNewClass={ e => this.handleAddClass(e) }/>
 
             </ClassesContainer>
         );
@@ -51,7 +51,7 @@ class Classes extends Component {
 			method: 'GET'
         }).then( response => response.json().then( data => {
             classes = data.map( item => new Class(item.id, undefined, item.nomeTurma, item.periodo, undefined))
-            this.setState({classes}, () => { console.dir(this.state.classes) });
+            this.setState({classes});
         }));
     }
     

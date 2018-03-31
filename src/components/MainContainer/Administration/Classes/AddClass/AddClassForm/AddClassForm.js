@@ -1,49 +1,92 @@
 import React, { Component } from 'react';
+import styled               from 'styled-components';
 
-import './AddClassForm.css';
+const LineBlock = styled.div`
+  display: block;
+  width: 100%;
+  margin: 2rem 0;
+
+  & label:first-child {
+    display: block;
+    margin: 1rem 0;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+`;
+
+const AddClassFormComponent = styled.form`
+  display: block;
+  width: 100%;
+`;
+
+const AddClassFormSelect = styled.select`
+  display: inline-block;
+  width: 240px;
+`;
+
+const courses = [
+  {
+    name: 'Técnico em Informática',
+    id: 0
+  },
+  {
+    name: 'Técnico em Redes',
+    id: 1
+  },
+  {
+    name: 'Técnico em Mecatrônica',
+    id: 2
+  }
+]
 
 class AddClassForm extends Component {
     render() {
         return (
-            <form className="principal__administration__classes__add-class" action="submit" onSubmit={ e => { e.preventDefault(); this.props.handleClassData(e); } }>
+            <AddClassFormComponent action="submit" onSubmit={ e => { e.preventDefault(); this.props.handleClassData(e); } }>
 
-                <div>
+                <LineBlock>
                     <label htmlFor="course">Curso:</label>
-                    <select name="course" id="course">
-                        <option value="0">Técnico em Informática</option>
-                        <option value="1">Técnico em Redes</option>
-                        <option value="2">Técnico em Mecatrônica</option>
-                    </select>
-                </div>
+                    <AddClassFormSelect name="course" id="course">
+                        {this.getCourseOptions()}
+                    </AddClassFormSelect>
+                </LineBlock>
 
-                <div>
+                <LineBlock>
                     <label htmlFor="semester">Semestre:</label>
-                    <select name="semester" id="semester">
+                    <AddClassFormSelect name="semester" id="semester">
                         <option value="01">01</option>
                         <option value="02">02</option>
                         <option value="03">03</option>
                         <option value="04">04</option>
-                    </select>
-                </div>
+                    </AddClassFormSelect>
+                </LineBlock>
 
-                <div>
+                <LineBlock>
                     <label htmlFor="period">Período:</label>
-                    <select name="period" id="period">
+                    <AddClassFormSelect name="period" id="period">
                         <option value="0">MANHÃ</option>
                         <option value="1">TARDE</option>
                         <option value="2">NOITE</option>
-                    </select>
-                </div>
+                    </AddClassFormSelect>
+                </LineBlock>
 
-                <div>
+                <LineBlock>
                     <label name="name" htmlFor="name">Nome:</label>
                     <input id="name" type="text"/>
-                </div>
+                </LineBlock>
 
                 <button type="submit">Adicionar</button>
 
-            </form>
+            </AddClassFormComponent>
         )
+    }
+
+    getCourseOptions = () => {
+      return courses.map( course => (
+        <option key={course.id} value={course.id}>
+          {course.name}
+        </option>
+      ))
     }
 }
 

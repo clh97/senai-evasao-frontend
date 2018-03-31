@@ -14,9 +14,9 @@ const ClassListItemTable = styled.table`
 `;
 
 const ClassListItemTableHeader = styled.th`
-  display: block;
-  width: 100%;
-  height: auto;
+  display: inline-block;
+  width: 25%;
+  border: 1px solid white;
 `;
 
 const ClassListItemTableRow = styled.tr`
@@ -28,7 +28,7 @@ const ClassListItemTableRow = styled.tr`
 
 const ClassListItemTableData = styled.td`
   display: inline-block;
-  width: 33.3%;
+  width: 25%;
   height: 100%;
   border: 1px solid white;
 `;
@@ -41,10 +41,11 @@ const ClassListItemDeleteButton = styled.button`
   position: absolute;
   height: 100%;
   width: auto;
-  margin: 0;
+  margin: auto 0;
   padding: 0;
   right: 0;
   top: 0;
+  border-radius: 0;
   cursor: pointer;
 
   &:hover {
@@ -53,38 +54,59 @@ const ClassListItemDeleteButton = styled.button`
 `;
 
 class ClassList extends Component {
+  /* LIFECYCLE METHODS */
   render() {
     return (
         <ClassListItemTable>
           <ClassListItemTBody>
-
-            <ClassListItemTableHeader>
-              <ClassListItemTableData>ID</ClassListItemTableData>
-              <ClassListItemTableData>Nome</ClassListItemTableData>
-              <ClassListItemTableData>Período</ClassListItemTableData>
-            </ClassListItemTableHeader>
-
+            <ClassListItemTableRow>
+              <ClassListItemTableHeader>
+                ID
+              </ClassListItemTableHeader>
+              <ClassListItemTableHeader>
+                Nome
+              </ClassListItemTableHeader>
+              <ClassListItemTableHeader>
+                Curso
+              </ClassListItemTableHeader>
+              <ClassListItemTableHeader>
+                Período
+              </ClassListItemTableHeader>
+            </ClassListItemTableRow>
             {
               this.props.items ?
               this.props.items.map( item => {
                 return (
-                  
-                <ClassListItemTableRow>
-                  <ClassListItemTableData>{item.id}</ClassListItemTableData>
-                  <ClassListItemTableData>{item.className}</ClassListItemTableData>
-                  <ClassListItemTableData>
-                    {item.period}
-                    <ClassListItemDeleteButton onClick={() => { this.props.onDeleteItem(item.id) }}>DEL</ClassListItemDeleteButton>
-                  </ClassListItemTableData>
-                </ClassListItemTableRow>
-
+                  <ClassListItemTableRow key={item.id}>
+                    <ClassListItemTableData>{item.id}</ClassListItemTableData>
+                    <ClassListItemTableData>{item.className}</ClassListItemTableData>
+                    <ClassListItemTableData>{item.course}</ClassListItemTableData>
+                    <ClassListItemTableData>
+                      {this.parseClassPeriod(item.period)}
+                      <ClassListItemDeleteButton onClick={() => { this.props.onDeleteItem(item.id) }}>DEL</ClassListItemDeleteButton>
+                    </ClassListItemTableData>
+                  </ClassListItemTableRow>
                 );
               }) : (<ClassListItemTableRow><Loading /></ClassListItemTableRow>)
             }
-          
           </ClassListItemTBody>
         </ClassListItemTable>
     );
+  }
+
+  /* CUSTOM METHODS */
+  parseClassPeriod = (periodNumber) => {
+    switch (parseInt(periodNumber)) {
+      case 0:
+        return 'MANHÃ';
+      case 1:
+        return 'TARDE';
+      case 2:
+        return 'NOITE';
+    
+      default:
+        break;
+    }
   }
 }
 

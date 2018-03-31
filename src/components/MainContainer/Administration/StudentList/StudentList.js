@@ -104,8 +104,8 @@ class StudentList extends Component {
       )
     }
 
-    componentWillMount() {
-      
+    componentDidMount() {
+      Modal.setAppElement('body')
     }
 
     /* -- CUSTOM METHODS -- */
