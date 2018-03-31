@@ -1,20 +1,19 @@
-import React, { Component }         from 'react';
-import Modal                        from 'react-modal';
-import styled                       from 'styled-components';
+import React, { Component }                       from 'react';
+import Modal                                      from 'react-modal';
+import styled                                     from 'styled-components';
 
 /*import EditableList         from '../../../EditableList/EditableList';*/
-import StudentDialog                from './StudentDialog/StudentDialog';
-import Loading                      from '../../../Loading/Loading';
+import StudentDialog                              from './StudentDialog/StudentDialog';
+import Loading                                    from '../../../Loading/Loading';
 
-import { API_STUDENTS_URL }         from '../../../../data_types/ApiData';
-import { associateStudentData }     from '../../../../data_types/Student';
+import { API_STUDENTS_URL, API_ANNOTATION_URL,
+         API_ANNOTATION_DELETE_URL }              from '../../../../data_types/ApiData';
+import { associateStudentData }                   from '../../../../data_types/Student';
 
 
 
 const modalStyles = {
   content : {
-    display               : 'block',
-    margin                : '10rem auto',
     width                 : '800px',
     height                : '600px',
     background            : 'var(--default-bg)',
@@ -84,7 +83,8 @@ class StudentList extends Component {
       this.state = {
         students: this.fetchStudents(),
         currentStudent: undefined,
-        dialogIsOpen: false
+        dialogIsOpen: false,
+        requesting: false
       }
     }
     /* -- LIFECYCLE METHODS -- */
@@ -98,7 +98,10 @@ class StudentList extends Component {
           }
 
           <Modal style={modalStyles} className='animated fadeInDown' isOpen={this.state.dialogIsOpen} onRequestClose={this.closeDialog} contentLabel={'Aluno'}>
-              <StudentDialog student={this.state.currentStudent} updateAnnotations={annotations => this.handleAnnotationUpdate(annotations) } />
+              <StudentDialog  student={this.state.currentStudent}
+                              addAnnotation={annotations => this.handleAddAnnotation(annotations) }
+                              removeAnnotation={id => this.handleRemoveAnnotation(id) }
+                              requesting={ this.state.requesting } />
           </Modal>
         </StudentListContainer>
       )
@@ -206,11 +209,31 @@ class StudentList extends Component {
       return color;
     }
 
-    handleAnnotationUpdate = ( newAnnotations ) => {
+    handleAddAnnotation = ( newAnnotations ) => {
+      const newAnnotation = newAnnotations.slice(-1).pop();
+      const {alunoId, mensagem} = newAnnotation;
+
+      fetch(API_ANNOTATION_URL, {
+      headers: {
+        'content-type': 'application/json'
+      },
+        method: 'POST', 
+        body: JSON.stringify({'AlunoId': alunoId, 'Mensagem': mensagem})
+      }).then( response => response.text().then( data => {
+        // console.log(data);
+      } ));
+
       let student = this.state.currentStudent;
       student.annotations = newAnnotations;
       this.setState({currentStudent: student});
     }
+
+    handleRemoveAnnotation = id => {
+      fetch(API_ANNOTATION_DELETE_URL.replace('{id}', id), {
+        method: 'DELETE'
+      }).then(response => { /*console.dir('response ->', response)*/ }).then(data => { /*console.dir(data)*/ })
+    }
+
 }
 
 export default StudentList;

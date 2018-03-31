@@ -75,7 +75,7 @@ class LoginForm extends Component {
                 break;
             
                 default:
-                    this.showErrorMessage('Erro de autenticação.');
+                    // this.showErrorMessage('Erro de autenticação.');
                     this.props.authenticationFail(data.message);
                 break;
             }

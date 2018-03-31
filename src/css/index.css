@@ -54,6 +54,7 @@ input:focus {
 button {
   margin: .5rem auto;
   padding: 8px 64px;
+  cursor: pointer;
   border: none;
   background: white;
   color: var(--default-bg);
@@ -97,9 +98,12 @@ input::placeholder {
 }
 
 .ReactModal__Overlay {
-  background: rgba(0, 0, 0, .85) !important;
+  background: rgba(0, 0, 0, .65) !important;
   cursor: pointer;
   z-index: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @keyframes rotate {

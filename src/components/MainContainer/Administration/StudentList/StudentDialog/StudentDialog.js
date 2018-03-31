@@ -79,13 +79,13 @@ class StudentDialog extends Component {
         let newAnnotations = annotations;
         annotations.length > 0 ? this.newId = (annotations.slice(-1).pop().id)+1: this.newId = 0;
         newAnnotations.push({ alunoId: id, id: this.newId, mensagem: annotationText });
-        this.setState({annotations}, () => this.props.updateAnnotations(newAnnotations))
+        this.setState({annotations}, () => this.props.addAnnotation(newAnnotations))
     }
     
     deleteAnnotation = id => {
         let { annotations } = this.state;
         let newAnnotations = annotations.filter(item => item.id !== id)
-        this.setState({annotations: newAnnotations}, () => this.props.updateAnnotations(newAnnotations));
+        this.setState({annotations: newAnnotations}, () => this.props.removeAnnotation(id));
     }
 
     adaptAnnotations = ( list ) => {

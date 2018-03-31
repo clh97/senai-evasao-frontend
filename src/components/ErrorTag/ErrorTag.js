@@ -5,7 +5,7 @@ import faError        from '@fortawesome/fontawesome-free-solid/faExclamationTri
 
 const ErrorContainer = styled.div`
   display: block;
-  width: 60%;
+  width: 70%;
   height: 22px;
   margin: 0 auto;
   background: orange;

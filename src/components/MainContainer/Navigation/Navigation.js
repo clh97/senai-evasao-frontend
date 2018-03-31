@@ -17,7 +17,7 @@ const NavigationContainer = styled.div`
   justify-content: center;
   padding: 1rem 0;
   width: 100%;
-  height: 80px;
+  min-height: 80px;
   background: var(--darker-bg);
   z-index: 3;
 
@@ -31,6 +31,7 @@ const NavigationButton = styled.button`
   width: 100%;
   height: 100%;
   margin: 0 1rem;
+  padding: 1rem 0;
   background: none;
   border: none;
   outline: none;

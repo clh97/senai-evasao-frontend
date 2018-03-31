@@ -9,14 +9,14 @@ import StudentList              from './StudentList/StudentList';
 import Menu                     from './Menu/Menu';
 /*import ExpandableContainer      from '../../ExpandableContainer/ExpandableContainer';*/
 
-/* STATIC DATA */
-import { API_UPLOAD_URL }       from '../../../data_types/ApiData';
-
 /* ICONS */
 import faUser               from '@fortawesome/fontawesome-free-solid/faUser'
 import faGraduationCap      from '@fortawesome/fontawesome-free-solid/faGraduationCap'
 import faUpload             from '@fortawesome/fontawesome-free-solid/faUpload'
 import faNewspaper          from '@fortawesome/fontawesome-free-solid/faNewspaper'  
+import faBook               from '@fortawesome/fontawesome-free-solid/faBook'  
+
+import Discipline from './Discipline/Discipline';
 
 const AdministrationContainer = styled.div`
   display: grid;
@@ -43,15 +43,21 @@ const menuItems = [
   },
   {
     idNum: 2,
-    id: 'classes',
-    title: 'Turmas',
-    faIcon: faNewspaper
+    id: 'discipline',
+    title: 'Disciplinas',
+    faIcon: faBook
   },
   {
     idNum: 3,
     id: 'uploading',
     title: 'Upload',
     faIcon: faUpload
+  },
+  {
+    idNum: 4,
+    id: 'classes',
+    title: 'Turmas',
+    faIcon: faNewspaper
   }
 ]
 
@@ -76,17 +82,6 @@ class Administration extends Component {
     }
 
     /* -- CUSTOM METHODS -- */
-    handleUpload = (form) => {
-        const files = form.target.file.files;
-        let data = new FormData();
-        for(let i = 0; i < files.length; i++) {
-            data.append('files', files[i]);
-        }
-        fetch(API_UPLOAD_URL, {
-            method: 'POST',
-            body: data
-        }).then( e => { console.dir(e) });
-    }
 
     handleDisplayChange = (displayName) => {
       this.setState({componentToDisplay: displayName})
@@ -104,7 +99,10 @@ class Administration extends Component {
           return <Classes />
         }
         case 'uploading': {
-          return <Uploading handleUploadInformation={ e => this.handleUpload(e) } />
+          return <Uploading />
+        }
+        case 'discipline': {
+          return <Discipline />
         }
 
         default:
