@@ -64,10 +64,10 @@ class ClassList extends Component {
                 ID
               </ClassListItemTableHeader>
               <ClassListItemTableHeader>
-                Nome
+                Turma
               </ClassListItemTableHeader>
               <ClassListItemTableHeader>
-                Curso
+                Semestre
               </ClassListItemTableHeader>
               <ClassListItemTableHeader>
                 Período
@@ -80,7 +80,7 @@ class ClassList extends Component {
                   <ClassListItemTableRow key={item.id}>
                     <ClassListItemTableData>{item.id}</ClassListItemTableData>
                     <ClassListItemTableData>{item.className}</ClassListItemTableData>
-                    <ClassListItemTableData>{item.course}</ClassListItemTableData>
+                    <ClassListItemTableData>{item.semester}</ClassListItemTableData>
                     <ClassListItemTableData>
                       {this.parseClassPeriod(item.period)}
                       <ClassListItemDeleteButton onClick={() => { this.props.onDeleteItem(item.id) }}>DEL</ClassListItemDeleteButton>

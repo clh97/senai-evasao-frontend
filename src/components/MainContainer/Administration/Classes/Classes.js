@@ -25,6 +25,7 @@ class Classes extends Component {
 
     /* -- LIFECYCLE -- */
     render() {
+        console.dir(this.state.classes)
         return (
             <ClassesContainer>
 

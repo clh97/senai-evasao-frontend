@@ -83,8 +83,7 @@ class StudentList extends Component {
       this.state = {
         students: this.fetchStudents(),
         currentStudent: undefined,
-        dialogIsOpen: false,
-        requesting: false
+        dialogIsOpen: false
       }
     }
     /* -- LIFECYCLE METHODS -- */
@@ -94,14 +93,13 @@ class StudentList extends Component {
         <StudentListContainer>
 
           {
-            this.state.students ? this.state.students.map( student => this.generateListItem(student)) : <Loading />/*<InternalErrorTag msg='Não foi possível obter os alunos.' />*/
+            this.state.students ? this.state.students.map( student => this.generateListItem(student)) : <Loading />
           }
 
           <Modal style={modalStyles} className='animated fadeInDown' isOpen={this.state.dialogIsOpen} onRequestClose={this.closeDialog} contentLabel={'Aluno'}>
               <StudentDialog  student={this.state.currentStudent}
                               addAnnotation={annotations => this.handleAddAnnotation(annotations) }
-                              removeAnnotation={id => this.handleRemoveAnnotation(id) }
-                              requesting={ this.state.requesting } />
+                              removeAnnotation={id => this.handleRemoveAnnotation(id)} />
           </Modal>
         </StudentListContainer>
       )

@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import styled               from 'styled-components';
 
+import { API_CLASS_URL }    from '../../../../../data_types/ApiData';
+import Class                from '../../../../../data_types/Class';
+import Loading from '../../../../Loading/Loading';
+
 const LineBlock = styled.div`
   display: block;
   width: 100%;
@@ -17,6 +21,18 @@ const LineBlock = styled.div`
 const AddClassFormComponent = styled.form`
   display: block;
   width: 100%;
+
+  & input[type="radio"] ~ label {
+    display: inline-block;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 5px 20px;
+    margin: 0 2px;
+  }
+
+  & input[type="radio"]:checked + label {
+    background: var(--darker-bg);
+  }
 `;
 
 const AddClassFormSelect = styled.select`
@@ -29,42 +45,58 @@ const AddClassFormInput = styled.input`
   width: 240px;
 `;
 
-const courses = [
-  {
-    name: 'Técnico em Informática',
-    id: 0
-  },
-  {
-    name: 'Técnico em Redes',
-    id: 1
-  },
-  {
-    name: 'Técnico em Mecatrônica',
-    id: 2
-  }
-]
+const RadioSemesterSelector = styled.input.attrs({
+  type: 'radio'
+})`
+  position: absolute;
+  display: none;
+  visibility: hidden;
+  user-select: none;
+`;
 
 class AddClassForm extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      classes: undefined
+    }
+  }
+
+  componentDidMount() {
+    this.requestClasses();
+  }
+  /* LIFECYCLE METHODS */
     render() {
         return (
             <AddClassFormComponent action="submit" onSubmit={ e => { e.preventDefault(); this.props.handleNewClass(e); } }>
 
-                <LineBlock>
-                    <label htmlFor="course">Curso:</label>
-                    <AddClassFormSelect name="course" id="course">
-                        {this.getCourseOptions()}
-                    </AddClassFormSelect>
-                </LineBlock>
+                {/*<LineBlock>
+                    <label htmlFor="class">Turma:</label>
+                    {
+                      this.state.classes ? <AddClassFormSelect name="class" id="class">
+                      {
+                        this.getClassOptions(this.state.classes)
+                      }
+                    </AddClassFormSelect> : <Loading />
+                    }
+                  </LineBlock>*/}
 
                 <LineBlock>
-                    <label htmlFor="semester">Semestre:</label>
-                    <AddClassFormSelect name="semester" id="semester">
-                        <option value="01">01</option>
-                        <option value="02">02</option>
-                        <option value="03">03</option>
-                        <option value="04">04</option>
-                    </AddClassFormSelect>
-                </LineBlock>
+                    <label htmlFor="tableType">Semestre:</label>
+
+                    <RadioSemesterSelector id="one" name="semester" value="1" defaultChecked/>
+                    <label htmlFor="one">01</label>
+
+                    <RadioSemesterSelector id="two" name="semester" value="2" />
+                    <label htmlFor="two">02</label>
+                    
+                    <RadioSemesterSelector id="three" name="semester" value="3" />
+                    <label htmlFor="three">03</label>
+
+                    <RadioSemesterSelector id="four" name="semester" value="4" />
+                    <label htmlFor="four">04</label>
+                  </LineBlock>
 
                 <LineBlock>
                     <label htmlFor="period">Período:</label>
@@ -86,11 +118,33 @@ class AddClassForm extends Component {
         )
     }
 
-    getCourseOptions = () => {
-      return courses.map( course => (
-        <option key={course.id} value={course.id}>
-          {course.name}
+
+    /* CUSTOM METHODS */
+
+    getClassOptions = classes => {
+      return classes.map( _class => (
+        <option key={_class.id} value={_class.id}>
+          {_class.name}
         </option>
+      ))
+    }
+
+    requestClasses = () => {
+      let classes = undefined;
+      fetch(API_CLASS_URL, {
+          headers: {
+              'content-type': 'application/json'
+          },
+          method: 'GET'
+      }).then( response => response.json().then( data => {
+          classes = data.map( item => new Class(item.id, undefined, item.nomeTurma, item.periodo, undefined))
+          this.setState({classes})
+      }));
+    }
+
+    getClassOptions = (classes) => {
+      return classes.map( _class => (
+        <option value={_class.id}>{_class.className}</option>
       ))
     }
 }

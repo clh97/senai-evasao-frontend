@@ -2,6 +2,7 @@ import React, { Component }     from 'react';
 import styled                   from 'styled-components';
 
 /* COMPONENTS */
+import DisciplineList           from './DisciplineList/DisciplineList';
 import AddCourse                from './AddCourse/AddCourse';
 import Classes                  from './Classes/Classes';
 import Uploading                from './Uploading/Uploading';
@@ -16,7 +17,7 @@ import faUpload             from '@fortawesome/fontawesome-free-solid/faUpload'
 import faNewspaper          from '@fortawesome/fontawesome-free-solid/faNewspaper'  
 import faBook               from '@fortawesome/fontawesome-free-solid/faBook'  
 
-import Discipline from './Discipline/Discipline';
+
 
 const AdministrationContainer = styled.div`
   display: grid;
@@ -102,7 +103,7 @@ class Administration extends Component {
           return <Uploading />
         }
         case 'discipline': {
-          return <Discipline />
+          return <DisciplineList />
         }
 
         default:

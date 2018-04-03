@@ -1,15 +1,17 @@
-import React, { Component }                 from 'react';
-import styled                               from 'styled-components';
+import React, { Component }                       from 'react';
+import styled                                     from 'styled-components';
 
-import Loading                              from '../../../Loading/Loading';
-import SuccessTag                           from '../../../SuccessTag/SuccessTag';
-import InternalErrorTag                     from '../../../InternalErrorTag/InternalErrorTag';
+import Loading                                    from '../../../Loading/Loading';
+import SuccessTag                                 from '../../../SuccessTag/SuccessTag';
+import InternalErrorTag                           from '../../../InternalErrorTag/InternalErrorTag';
 
 /* STATIC DATA */
 import { API_UPLOAD_URL, API_CLASS_URL,
-         API_COURSE_URL }                   from '../../../../data_types/ApiData';
-import Class                                from '../../../../data_types/Class';
-import Course                               from '../../../../data_types/Course';
+         API_COURSE_URL, API_DISCIPLINES_URL }    from '../../../../data_types/ApiData';
+import Class                                      from '../../../../data_types/Class';
+import Discipline                                 from '../../../../data_types/Discipline';
+
+import Course                                     from '../../../../data_types/Course';
 
 const UploadingForm = styled.form`
   & input[type="radio"] ~ label {
@@ -77,13 +79,13 @@ class Uploading extends Component {
                   <LineBlock>
                     <label htmlFor="tableType">Tipo de tabela:</label>
 
-                    <RadioFileTypeSelector id="presenca" name="selector" value="presenca" defaultChecked/>
+                    <RadioFileTypeSelector id="presenca" name="spreadsheet" value="presenca" defaultChecked/>
                     <label htmlFor="presenca">Presença</label>
 
-                    <RadioFileTypeSelector id="sintese" name="selector" value="sintese" />
+                    <RadioFileTypeSelector id="sintese" name="spreadsheet" value="sintese" />
                     <label htmlFor="sintese">Síntese</label>
                     
-                    <RadioFileTypeSelector id="notas" name="selector" value="notas" />
+                    <RadioFileTypeSelector id="notas" name="spreadsheet" value="notas" />
                     <label htmlFor="notas">Notas</label>
                   </LineBlock>
 
@@ -107,9 +109,9 @@ class Uploading extends Component {
                   <LineBlock>
                     <label htmlFor="course">Disciplina:</label>
                     {
-                      this.state.courses ? <select name="course" id="course">
+                      this.state.disciplines ? <select name="discipline" id="discipline">
                       {
-                        this.getCourseOptions(this.state.courses)
+                        this.getDisciplineOptions(this.state.disciplines)
                       }
                     </select> : <Loading />
                     }
@@ -133,11 +135,13 @@ class Uploading extends Component {
     }
 
     componentDidMount() {
-      this.requestClasses()
-      this.requestCourses()
+      this.requestClasses();
+      this.requestCourses();
+      this.requestDisciplines();
     }
 
     /* -- CUSTOM METHODS -- */
+    /* CLASSES */
     requestClasses = () => {
       let classes = undefined;
       fetch(API_CLASS_URL, {
@@ -157,6 +161,7 @@ class Uploading extends Component {
       ))
     }
 
+    /* COURSES */
     requestCourses = () => {
       let courses = undefined;
       fetch(API_COURSE_URL, {
@@ -170,9 +175,29 @@ class Uploading extends Component {
       }));
     }
 
-    getCourseOptions = (courses) => {
+    getCourseOptions = courses => {
       return courses.map( course => (
         <option value={course.id}>{course.name}</option>
+      ))
+    }
+
+    /* DISCIPLINES */
+    requestDisciplines = () => {
+      let disciplines = undefined;
+      fetch(API_DISCIPLINES_URL, {
+          headers: {
+              'content-type': 'application/json'
+          },
+          method: 'GET'
+      }).then( response => response.json().then( data => {
+          disciplines = data.map( item => new Discipline(item))
+          this.setState({disciplines})
+      }));
+    }
+
+    getDisciplineOptions = disciplines => {
+      return disciplines.map( discipline => (
+        <option value={discipline.id}>{discipline.name}</option>
       ))
     }
 

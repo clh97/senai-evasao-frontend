@@ -19,11 +19,20 @@ const StudentPhoto = styled.img`
     z-index: 4;
 `;
 
-const StudentName = styled.h2`
+const StudentRegistration = styled.h2`
     position: absolute;
     text-transform: uppercase;
     font-size: 1.5rem;
-    top: 75px;
+    top: 80px;
+    left: 210px;
+    z-index: 4;
+`;
+
+const StudentName = styled.h2`
+    position: absolute;
+    text-transform: uppercase;
+    font-size: 1.75rem;
+    top: 50px;
     left: 210px;
     z-index: 4;    
 `;
@@ -61,6 +70,7 @@ class StudentDialog extends Component {
 
                 <StudentPhoto src={student.photoUrl ? student.photoUrl : 'http://placehold.it/320x320/'} alt="" />
 
+                <StudentRegistration>RA: { student.registration }</StudentRegistration>
                 <StudentName>{student.name}</StudentName>
 
                 <StudentInformations>
