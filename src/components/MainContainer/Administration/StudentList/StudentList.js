@@ -81,14 +81,13 @@ class StudentList extends Component {
       super(props);
 
       this.state = {
-        students: this.fetchStudents(),
+        students: undefined,
         currentStudent: undefined,
         dialogIsOpen: false
       }
     }
     /* -- LIFECYCLE METHODS -- */
     render() {
-      
       return (
         <StudentListContainer>
 
@@ -106,7 +105,8 @@ class StudentList extends Component {
     }
 
     componentDidMount() {
-      Modal.setAppElement('body')
+      Modal.setAppElement('body');
+      this.fetchStudents();
     }
 
     /* -- CUSTOM METHODS -- */
@@ -117,7 +117,7 @@ class StudentList extends Component {
         data.forEach(student => {
           students.push(associateStudentData(student));
         })
-      })).then( () => this.setState({students}) );
+      })).then( () => this.setState({students}, () => { this.reorderStudentList(this.state.students) }) );
     }
 
     openDialog = (student) => this.setState({currentStudent: student, dialogIsOpen: true});
@@ -148,6 +148,14 @@ class StudentList extends Component {
       max === 1 ? color = '--yellow-student' : color = '--red-student';
       return color;
     }
+
+    reorderStudentList = ( studentList ) => {
+      let newStudentList = studentList.filter( student => student.alerts.length > 0);
+      let finalStudentList = newStudentList.forEach( student => {
+        student.alerts.forEach(alert => console.dir(alert))
+      } );
+    }
+    /* TODO: AJUSTAR O REORDER DE ALUNOS NA LISTA */
 
     handleAddAnnotation = ( newAnnotations ) => {
       const newAnnotation = newAnnotations.slice(-1).pop();

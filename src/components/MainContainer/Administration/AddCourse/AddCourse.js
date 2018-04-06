@@ -74,9 +74,15 @@ class AddCourse extends Component {
     }
 
     handleDeleteCourse = id => {
+      let { courses } = this.state;
+      let newCourses = courses.filter( course => course.id !== id )
+      this.setState({courses: newCourses});
       fetch(API_COURSE_DELETE_URL.replace('{id}', id), {
         method: 'DELETE'
-      }).then(response => { /*console.dir('response ->', response)*/ }).then(data => { /*console.dir(data)*/ })
+      }).then(response => {
+        
+      })
+      
     }
     /* TODO: PEDIR PARA ALEX ARRUMAR ENDPOINT DE DELETE DE CURSOSSSSS!!!!! */
 }
