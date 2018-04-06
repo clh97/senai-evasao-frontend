@@ -65,6 +65,16 @@ class Classes extends Component {
         this.setState({classes: newClasses});
     }
 
+    handleNewCourse = (newCourse) => {
+        fetch('API_COURSE_POST_URL', {
+          headers: {
+            'content-type': 'application/json'
+          },
+          method: 'POST', 
+          body: JSON.stringify({'NomeCurso': newCourse.name})
+        })
+      }
+
     handleDeleteClass = id => {
         let novaLista = this.state.classes.filter(item => item.id !== id);
         this.setState({classes: novaLista});

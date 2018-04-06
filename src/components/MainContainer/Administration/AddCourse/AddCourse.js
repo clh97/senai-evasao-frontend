@@ -1,57 +1,84 @@
 import React, { Component } from 'react';
+import styled               from 'styled-components';
+
+import { API_COURSE_URL, API_COURSE_POST_URL, API_COURSE_DELETE_URL }
+                            from '../../../../data_types/ApiData';
+import Course               from '../../../../data_types/Course';
 
 // import AddCourseForm from './AddCourseForm/AddCourseForm';
-import EditableList from '../../../EditableList/EditableList';
+import EditableList         from '../../../EditableList/EditableList';
+import Loading              from '../../../Loading/Loading'; 
 
-import './AddCourse.css';
+const AddCourseContainer = styled.div`
+  display: block;
+  width: 100%;
+  height: 100%;
+`;
 
 class AddCourse extends Component {
-
-    constructor() {
-        super();
-
-        this.state = {
-            courses: this.getCourses()
-        };
-    }
+  constructor() {
+    super();
+    
+    this.state = {
+      courses: undefined
+    };
+  }
+  /* LIFECYCLE METHODS */
     render() {
         return (
-            <div className="principal__administration__add-course">
+            <AddCourseContainer>
                 {
-                    <EditableList items={this.state.courses} rightButton={true} onDeleteItem={ e => this.handleDeleteCourse(e) } onAddItem={ e => this.handleNewCourse(e) } addButton={true} />
+                  this.state.courses ?
+                  <EditableList items={this.state.courses} onDeleteItem={ e => this.handleDeleteCourse(e) } onAddItem={ e => this.addCourse(e) } addButton={true} /> :
+                  <Loading />
                 }
-            </div>
+            </AddCourseContainer>
         )
     }
 
-    handleNewCourse = e => {
-        let novaLista = this.state.courses;
-        novaLista.push(
-            {
-                id: this.state.courses.length + 1,
-                name: e.target.name.value
-            }
-        )
-        this.setState({courses: novaLista});
+    componentDidMount() {
+      this.requestCourses();
+    }
+
+    /* CUSTOM METHODS */
+    addCourse = e => {
+      let courses = this.state.courses;
+      let newId = 0;
+      courses.length > 0 ? newId = (courses.slice(-1).pop().id) + 1: newId = 0;
+      const newCourse = new Course(undefined, newId, e.target.name.value );
+      courses.push(newCourse);
+      this.setState({courses}, () => { this.handleNewCourse(newCourse) })
+    }
+
+    handleNewCourse = (newCourse) => {
+      fetch(API_COURSE_POST_URL, {
+        headers: {
+          'content-type': 'application/json'
+        },
+        method: 'POST', 
+        body: JSON.stringify({'NomeCurso': newCourse.name})
+      })
+    }
+
+    requestCourses = () => {
+      let courses = undefined;
+      fetch(API_COURSE_URL, {
+          headers: {
+              'content-type': 'application/json'
+          },
+          method: 'GET'
+      }).then( response => response.json().then( data => {
+          courses = data.map( item => new Course(item.clDisciplinas, item.id, item.nomeCurso))
+          this.setState({courses})
+      }));
     }
 
     handleDeleteCourse = id => {
-        let novaLista = this.state.courses.filter(item => item.id !== id);
-        this.setState({courses: novaLista});
+      fetch(API_COURSE_DELETE_URL.replace('{id}', id), {
+        method: 'DELETE'
+      }).then(response => { /*console.dir('response ->', response)*/ }).then(data => { /*console.dir(data)*/ })
     }
-
-    getCourses = () => {
-        return [
-            {
-                id: 0,
-                name: 'Técnico em Informática'
-            },
-            {
-                id: 1,
-                name: 'Técnico em Redes'
-            }
-        ];
-    }
+    /* TODO: PEDIR PARA ALEX ARRUMAR ENDPOINT DE DELETE DE CURSOSSSSS!!!!! */
 }
 
 export default AddCourse;

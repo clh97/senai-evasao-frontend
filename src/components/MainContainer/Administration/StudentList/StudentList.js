@@ -110,64 +110,6 @@ class StudentList extends Component {
     }
 
     /* -- CUSTOM METHODS -- */
-    getStudents = () => {
-      return [
-        {
-          id: 0,
-          ra: '123456789',
-          name: 'michel calheiros',
-          evaded: false,
-          photoUrl: 'http://placehold.it/128x128',
-          alerts: [
-            {
-              id: 0,
-              nivel: 1,
-              message: 'faltou 3 dias consecutivos',
-              old: false,
-              origin: 'BACK',
-              date: '00/00/00'
-            }
-          ],
-          annotations: [
-            {
-              id: 0,
-              annotation: 'aluno impiedosamente come dois lanches no intervalo'
-            },
-            {
-              id: 1,
-              annotation: 'insatisfeito com a vida pq (ainda) não trabalha com React'
-            }
-          ]
-        },
-        {
-          id: 1,
-          ra: '987654321',
-          name: 'gordo dados',
-          evaded: false,
-          photoUrl: 'http://placehold.it/128x128',
-          alerts: [
-            {
-              id: 1,
-              nivel: 2,
-              message: 'apresentou comportamento depressivo nos ultimos 7 dias',
-              old: false,
-              origin: 'IOT',
-              date: '00/00/00'
-            }
-          ],
-          annotations: [
-            {
-              id: 0,
-              content: 'aluno com caspa'
-            },
-            {
-              id: 1,
-              content: 'come nuggets'
-            }
-          ]
-        }
-      ];
-    }
 
     fetchStudents = () => {
       const students = [];

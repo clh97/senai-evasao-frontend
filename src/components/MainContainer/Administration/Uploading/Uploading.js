@@ -266,7 +266,6 @@ class Uploading extends Component {
               break;
           
             default:
-              console.dir('default');
               break;
           }
         });

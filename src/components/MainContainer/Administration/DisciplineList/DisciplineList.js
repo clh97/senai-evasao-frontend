@@ -3,22 +3,11 @@ import styled                   from 'styled-components';
 
 import Discipline               from '../../../../data_types/Discipline';
 import { API_DISCIPLINES_URL }  from '../../../../data_types/ApiData';
-import Loading from '../../../Loading/Loading';
-
-
-const DisciplineContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-  height: 100%;
-`;
+import Loading                  from '../../../Loading/Loading';
 
 class DisciplineList extends Component {
   constructor() {
     super();
-
     this.state = {
       disciplines: undefined
     }
@@ -26,13 +15,15 @@ class DisciplineList extends Component {
   /* LIFECYCLE METHODS */
   render() {
     return (
-      <DisciplineContainer>
+      <form onSubmit={ e => {} }>
         {
           this.state.disciplines ? this.state.disciplines.map( discipline => {
-            return <p>{discipline.name}</p>
+            return (
+              <div></div>
+            )
           }) : <Loading />
         }
-      </DisciplineContainer>
+      </form>
     );
   }
 

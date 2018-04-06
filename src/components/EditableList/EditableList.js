@@ -6,7 +6,7 @@ import InternalErrorTag     from '../InternalErrorTag/InternalErrorTag';
 
 const EditableListItem = ({id, content, action, buttonText}) => (
     <li key={id}>
-        <span>{(content instanceof String) ? content.name : content }</span>
+        <div>{(content instanceof String) ? content.name : content }</div>
         {
             action ? <button onClick={action}>{buttonText}</button> : undefined
         }
@@ -23,7 +23,7 @@ const EditableListAdd = ({onAddItem}) => (
 );
 
 const EditableListContainer = styled.div`
-  width: 100%;
+  max-width: 100%;
   margin: 0;
   padding: 0;
 `;
@@ -38,18 +38,30 @@ const EditableListComponent = styled.ul`
   }
 
   & > li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
+    max-width: 70vw;
     height: 60px;
+    max-height: 180px;
+    padding: 12px;
+    overflow: hidden;
     margin: .5rem 0;
     list-style: none;
     border: 1px solid rgba(255, 255, 255, .30);
   }
 
-  & > li > span {
+  & > li:last-child {
+      padding: 0;
+  }
+
+  & > li > div {
     display: inline-block;
     width: 90%;
-    height: 100%;
-    line-height: 60px;
+    height: auto;
+    word-wrap: break-word;
+    line-height: 32px;
   }
 
   & > li > button, & > li > form > button {
