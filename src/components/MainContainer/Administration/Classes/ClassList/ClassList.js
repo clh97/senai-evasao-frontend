@@ -17,20 +17,33 @@ const ClassListItemTableHeader = styled.th`
   display: inline-block;
   width: 25%;
   border: 1px solid white;
+
+  &:last-child {
+    border: none;
+  }
 `;
 
 const ClassListItemTableRow = styled.tr`
-  position: relative; 
   display: block;
   width: 100%;
-  height: 22px;
+
+  & td:last-child {
+    border: none;
+  }
 `;
 
 const ClassListItemTableData = styled.td`
   display: inline-block;
+  min-width: 25%;
   width: 25%;
   height: 100%;
+  padding: 12px;
   border: 1px solid white;
+
+  &:last-child {
+    width: 20px;
+    padding: 0;
+  }
 `;
 
 const ClassListItemTBody = styled.tbody`
@@ -38,14 +51,12 @@ const ClassListItemTBody = styled.tbody`
 `;
 
 const ClassListItemDeleteButton = styled.button`
-  position: absolute;
-  height: 100%;
-  width: auto;
-  margin: auto 0;
-  padding: 0;
-  right: 0;
-  top: 0;
-  border-radius: 0;
+  left: 0;
+  height: 22px;
+  width: 50%;
+  margin: 0;
+  padding: 0 6px;
+  border-radius: 4px;
   cursor: pointer;
 
   &:hover {
@@ -66,11 +77,14 @@ class ClassList extends Component {
               <ClassListItemTableHeader>
                 Turma
               </ClassListItemTableHeader>
-              <ClassListItemTableHeader>
+              {/* {<ClassListItemTableHeader>
                 Semestre
-              </ClassListItemTableHeader>
+              </ClassListItemTableHeader>} */}
               <ClassListItemTableHeader>
                 Período
+              </ClassListItemTableHeader>
+              <ClassListItemTableHeader>
+                 
               </ClassListItemTableHeader>
             </ClassListItemTableRow>
             {
@@ -80,9 +94,11 @@ class ClassList extends Component {
                   <ClassListItemTableRow key={item.id}>
                     <ClassListItemTableData>{item.id}</ClassListItemTableData>
                     <ClassListItemTableData>{item.className}</ClassListItemTableData>
-                    <ClassListItemTableData>{item.semester}</ClassListItemTableData>
+                    {/* {<ClassListItemTableData>{item.semester}</ClassListItemTableData>} */}
                     <ClassListItemTableData>
                       {this.parseClassPeriod(item.period)}
+                    </ClassListItemTableData>
+                    <ClassListItemTableData>
                       <ClassListItemDeleteButton onClick={() => { this.props.onDeleteItem(item.id) }}>DEL</ClassListItemDeleteButton>
                     </ClassListItemTableData>
                   </ClassListItemTableRow>

@@ -4,7 +4,8 @@ import styled               from 'styled-components';
 import AddClass             from './AddClass/AddClass';
 import ClassList            from './ClassList/ClassList';
 
-import { API_CLASS_URL }    from '../../../../data_types/ApiData';
+import { API_CLASS_URL, API_CLASS_DELETE_URL, API_CLASS_POST_URL }
+                            from '../../../../data_types/ApiData';
 import Class                from '../../../../data_types/Class';
 
 const ClassesContainer = styled.div`
@@ -25,7 +26,6 @@ class Classes extends Component {
 
     /* -- LIFECYCLE -- */
     render() {
-        console.dir(this.state.classes)
         return (
             <ClassesContainer>
 
@@ -51,7 +51,8 @@ class Classes extends Component {
             },
 			method: 'GET'
         }).then( response => response.json().then( data => {
-            classes = data.map( item => new Class(item.id, undefined, item.nomeTurma, item.periodo, undefined))
+            classes = data.map( item => new Class(item.id, undefined, item.nomeTurma, item.periodo, item.statusTurma))
+            classes = classes.filter( item => item.status !== false)
             this.setState({classes});
         }));
     }
@@ -59,25 +60,28 @@ class Classes extends Component {
     handleAddClass = e => {
         const { course, semester, period, name } = e.target;
         let newClasses = this.state.classes;
-        let newId;
-        newClasses.length !== 0 ? newId = (this.state.classes.slice(-1).pop().id)+1 : newId = 1;
-        newClasses.push(new Class(newId, 1, name.value, period.value, semester.value));
-        this.setState({classes: newClasses});
+        newClasses.length !== 0 ? this.newId = (this.state.classes.slice(-1).pop().id)+1 : this.newId = 1;
+        const newClass = new Class(this.newId, /*course*/ 1, name.value, period.value, 0)
+        newClasses.push(newClass);
+        this.setState({classes: newClasses}, () => {
+          fetch(API_CLASS_POST_URL, {
+            headers: {
+              'content-type': 'application/json'
+            },
+            method: 'POST', 
+            body: JSON.stringify({nomeTurma: newClass.className, periodo: newClass.period, escolaId: newClass.schoolId, statusTurma: true })
+          }).then( response => console.dir(response)).then(data => console.dir(data))
+        });
     }
-
-    handleNewCourse = (newCourse) => {
-        fetch('API_COURSE_POST_URL', {
-          headers: {
-            'content-type': 'application/json'
-          },
-          method: 'POST', 
-          body: JSON.stringify({'NomeCurso': newCourse.name})
-        })
-      }
 
     handleDeleteClass = id => {
         let novaLista = this.state.classes.filter(item => item.id !== id);
-        this.setState({classes: novaLista});
+        this.setState({classes: novaLista}, () => {
+          fetch(API_CLASS_DELETE_URL.replace('{id}', id).replace('{query}', false), {
+            method: 'PUT'
+          })
+        });
+        
     }
 
 }

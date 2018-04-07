@@ -117,7 +117,7 @@ class StudentList extends Component {
         data.forEach(student => {
           students.push(associateStudentData(student));
         })
-      })).then( () => this.setState({students}, () => { this.reorderStudentList(this.state.students) }) );
+      })).then( () => this.setState({students}, () => { this.reorderStudentList(this.state.students) }) ).catch(e => { console.dir(e) });
     }
 
     openDialog = (student) => this.setState({currentStudent: student, dialogIsOpen: true});
@@ -125,10 +125,10 @@ class StudentList extends Component {
     closeDialog = () => this.setState({dialogIsOpen: false});
 
     generateListItem = ( student ) => {
-      let alertLevel;
-      student.alerts.length > 0 ? alertLevel = this.defineStudentAlertLevel(student) : alertLevel = '--darker-bg';
+      let alertColor;
+      student.alerts.length > 0 ? alertColor = this.defineStudentAlertColor(student) : alertColor = '--darker-bg';
       return (
-        <StudentListItem key={student.id} background={`var(${alertLevel});`} onClick={ () => this.openDialog(student) }>
+        <StudentListItem key={student.id} background={`var(${alertColor});`} onClick={ () => this.openDialog(student) }>
           {
             student.photoUrl ? <StudentListItemPhoto src={student.photoUrl}/> : undefined
           }
@@ -138,7 +138,7 @@ class StudentList extends Component {
       )
     }
 
-    defineStudentAlertLevel = ( student ) => {
+    defineStudentAlertColor = ( student ) => {
       let color = '--medium-bg';
       let levels = [];
       student.alerts.forEach( alert => {
@@ -151,9 +151,30 @@ class StudentList extends Component {
 
     reorderStudentList = ( studentList ) => {
       let newStudentList = studentList.filter( student => student.alerts.length > 0);
-      let finalStudentList = newStudentList.forEach( student => {
-        student.alerts.forEach(alert => console.dir(alert))
-      } );
+      let finalList;
+      let redStudentList = [];
+      let yelStudentList = [];
+      newStudentList.forEach( student => {
+        student.alerts.forEach( alert => {
+          if(alert.nivelPrioridade === 2) {
+            redStudentList.push(student);
+            newStudentList.slice(1, newStudentList.indexOf(student));
+          } 
+          if(alert.nivelPrioridade === 1) {
+            yelStudentList.push(student);
+            newStudentList.slice(1, newStudentList.indexOf(student));
+          } 
+        } )
+        redStudentList.forEach( red => {
+           yelStudentList.forEach( (yel, index) => {
+             if(yel.id === red.id) {
+               yelStudentList.splice(index, 1);
+             }
+           })
+        } )
+      });
+      finalList = [...redStudentList, ...yelStudentList];
+      this.setState({students: finalList});
     }
     /* TODO: AJUSTAR O REORDER DE ALUNOS NA LISTA */
 
@@ -162,10 +183,10 @@ class StudentList extends Component {
       const {alunoId, mensagem} = newAnnotation;
 
       fetch(API_ANNOTATION_URL, {
-      headers: {
-        'content-type': 'application/json'
-      },
-        method: 'POST', 
+        headers: {
+          'content-type': 'application/json'
+        },
+        method: 'POST',
         body: JSON.stringify({'AlunoId': alunoId, 'Mensagem': mensagem})
       }).then( response => response.text().then( data => {
         // console.log(data);

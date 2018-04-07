@@ -3,7 +3,7 @@ import styled               from 'styled-components';
 
 import { API_CLASS_URL }    from '../../../../../data_types/ApiData';
 import Class                from '../../../../../data_types/Class';
-import Loading from '../../../../Loading/Loading';
+import Loading              from '../../../../Loading/Loading';
 
 const LineBlock = styled.div`
   display: block;
@@ -82,7 +82,7 @@ class AddClassForm extends Component {
                     }
                   </LineBlock>*/}
 
-                <LineBlock>
+                {/* {<LineBlock>
                     <label htmlFor="tableType">Semestre:</label>
 
                     <RadioSemesterSelector id="one" name="semester" value="1" defaultChecked/>
@@ -96,7 +96,7 @@ class AddClassForm extends Component {
 
                     <RadioSemesterSelector id="four" name="semester" value="4" />
                     <label htmlFor="four">04</label>
-                  </LineBlock>
+                  </LineBlock>} */}
 
                 <LineBlock>
                     <label htmlFor="period">Período:</label>
