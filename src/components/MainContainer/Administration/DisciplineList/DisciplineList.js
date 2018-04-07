@@ -2,8 +2,12 @@ import React, { Component }     from 'react';
 import styled                   from 'styled-components';
 
 import Discipline               from '../../../../data_types/Discipline';
-import { API_DISCIPLINES_URL }  from '../../../../data_types/ApiData';
+import { API_DISCIPLINES_URL, API_DISCIPLINE_POST_URL} 
+                                from '../../../../data_types/ApiData';
+
+import EditableList             from '../../../EditableList/EditableList';
 import Loading                  from '../../../Loading/Loading';
+
 
 class DisciplineList extends Component {
   constructor() {
@@ -17,11 +21,7 @@ class DisciplineList extends Component {
     return (
       <form onSubmit={ e => {} }>
         {
-          this.state.disciplines ? this.state.disciplines.map( discipline => {
-            return (
-              <div></div>
-            )
-          }) : <Loading />
+          this.state.disciplines ? <EditableList items={ this.state.disciplines } addButton={true}  onAddItem={e => this.addDiscipline(e.target.name.value)} /> : <Loading />
         }
       </form>
     );
@@ -43,6 +43,16 @@ class DisciplineList extends Component {
       this.setState({disciplines})
     } )
   })
+  }
+
+  addDiscipline = disciplineName => {
+    fetch(API_DISCIPLINE_POST_URL, {
+      headers: {
+        'content-type': 'application/json'
+      },
+      method: 'POST', 
+      body: JSON.stringify({nomeDisciplina: disciplineName, cursoId: 1, termoId: 1})
+    }).then(response => console.dir(response.text())) /* PEDIR PARA BACK-END OTIMIZAR ESSE RESPONSE. PARA OBTER O ID SEM REGEX / SUBSTR */
   }
 
 }

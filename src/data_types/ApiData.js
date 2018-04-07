@@ -4,6 +4,7 @@ export const API_UPLOAD_URL               = 'http://alexlima1-001-site1.htempurl
 export const API_ANNOTATION_URL           = 'http://alexlima1-001-site1.htempurl.com/api/anotacoes';
 export const API_COURSE_POST_URL          = 'http://alexlima1-001-site1.htempurl.com/api/curso';
 export const API_CLASS_POST_URL           = 'http://alexlima1-001-site1.htempurl.com/api/turma';
+export const API_DISCIPLINE_POST_URL      = 'http://alexlima1-001-site1.htempurl.com/api/disciplina';
 /* GET */
 export const API_CLASS_URL                = 'http://alexlima1-001-site1.htempurl.com/api/turma/todos';
 export const API_STUDENTS_URL             = 'http://alexlima1-001-site1.htempurl.com/api/aluno/todos';

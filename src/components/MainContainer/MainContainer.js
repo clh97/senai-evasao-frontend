@@ -28,7 +28,7 @@ class MainContainer extends Component {
             <Principal>
                 <RouteSwitcher logout={() => this.props.logout()} />
                 <Switch>
-                    <Route exact path="/" render={ () => <Home info={informations} /> } />
+                    <Route exact path="/" render={ () => <Administration /> /*<Home info={informations />}*/ } />
                     <Route path="/home" render={ () => <Home info={informations} /> } />
                     <Route path="/administracao" render={ () => <Administration /> } />
                     <Route path="/estatisticas" component={Statistics} />

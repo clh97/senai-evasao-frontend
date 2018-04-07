@@ -1,11 +1,5 @@
 export default class Annotation {
-  constructor(props) {
-    const {
-      mensagem:message,
-      alunoId:studentId,
-      id:annotationId,
-    } = props;
-    
+  constructor(message, studentId, annotationId) {
     this.message        = message;
     this.studentId      = studentId;
     this.annotationId   = annotationId;

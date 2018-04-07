@@ -103,7 +103,7 @@ class EditableList extends Component {
                     {
                         this.props.items ? this.props.items.map(item => {
                             const { id, name } = item;
-                            return <EditableListItem key={id} content={name} action={ e => this.props.onDeleteItem ? this.props.onDeleteItem(id) : undefined } buttonText={this.props.buttonText ? this.props.buttonText : 'DEL' } onClickAction={ () => this.props.onClickAction ? this.props.onClickAction() : undefined } />
+                            return <EditableListItem key={id} content={name} action={ this.props.onDeleteItem ? e => this.props.onDeleteItem(id) : undefined } buttonText={this.props.buttonText ? this.props.buttonText : 'DEL' } onClickAction={ () => this.props.onClickAction ? this.props.onClickAction() : undefined } />
                         }) : <InternalErrorTag msg="Não foi possível obter os itens da lista." />
                     }
                     {

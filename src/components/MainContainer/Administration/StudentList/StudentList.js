@@ -6,8 +6,7 @@ import styled                                     from 'styled-components';
 import StudentDialog                              from './StudentDialog/StudentDialog';
 import Loading                                    from '../../../Loading/Loading';
 
-import { API_STUDENTS_URL, API_ANNOTATION_URL,
-         API_ANNOTATION_DELETE_URL }              from '../../../../data_types/ApiData';
+import { API_STUDENTS_URL }                       from '../../../../data_types/ApiData';
 import { associateStudentData }                   from '../../../../data_types/Student';
 
 
@@ -96,9 +95,7 @@ class StudentList extends Component {
           }
 
           <Modal style={modalStyles} className='animated fadeInDown' isOpen={this.state.dialogIsOpen} onRequestClose={this.closeDialog} contentLabel={'Aluno'}>
-              <StudentDialog  student={this.state.currentStudent}
-                              addAnnotation={annotations => this.handleAddAnnotation(annotations) }
-                              removeAnnotation={id => this.handleRemoveAnnotation(id)} />
+              <StudentDialog student={this.state.currentStudent} />
           </Modal>
         </StudentListContainer>
       )
@@ -120,11 +117,11 @@ class StudentList extends Component {
       })).then( () => this.setState({students}, () => { this.reorderStudentList(this.state.students) }) ).catch(e => { console.dir(e) });
     }
 
-    openDialog = (student) => this.setState({currentStudent: student, dialogIsOpen: true});
+    openDialog = student => this.setState({currentStudent: student, dialogIsOpen: true});
 
-    closeDialog = () => this.setState({dialogIsOpen: false});
+    closeDialog = () => this.setState({ dialogIsOpen: false });
 
-    generateListItem = ( student ) => {
+    generateListItem = student => {
       let alertColor;
       student.alerts.length > 0 ? alertColor = this.defineStudentAlertColor(student) : alertColor = '--darker-bg';
       return (
@@ -138,7 +135,7 @@ class StudentList extends Component {
       )
     }
 
-    defineStudentAlertColor = ( student ) => {
+    defineStudentAlertColor = student => {
       let color = '--medium-bg';
       let levels = [];
       student.alerts.forEach( alert => {
@@ -149,7 +146,7 @@ class StudentList extends Component {
       return color;
     }
 
-    reorderStudentList = ( studentList ) => {
+    reorderStudentList = studentList => {
       let newStudentList = studentList.filter( student => student.alerts.length > 0);
       let finalList;
       let redStudentList = [];
@@ -175,32 +172,6 @@ class StudentList extends Component {
       });
       finalList = [...redStudentList, ...yelStudentList];
       this.setState({students: finalList});
-    }
-    /* TODO: AJUSTAR O REORDER DE ALUNOS NA LISTA */
-
-    handleAddAnnotation = ( newAnnotations ) => {
-      const newAnnotation = newAnnotations.slice(-1).pop();
-      const {alunoId, mensagem} = newAnnotation;
-
-      fetch(API_ANNOTATION_URL, {
-        headers: {
-          'content-type': 'application/json'
-        },
-        method: 'POST',
-        body: JSON.stringify({'AlunoId': alunoId, 'Mensagem': mensagem})
-      }).then( response => response.text().then( data => {
-        // console.log(data);
-      } ));
-
-      let student = this.state.currentStudent;
-      student.annotations = newAnnotations;
-      this.setState({currentStudent: student});
-    }
-
-    handleRemoveAnnotation = id => {
-      fetch(API_ANNOTATION_DELETE_URL.replace('{id}', id), {
-        method: 'DELETE'
-      }).then(response => { /*console.dir('response ->', response)*/ }).then(data => { /*console.dir(data)*/ })
     }
 
 }

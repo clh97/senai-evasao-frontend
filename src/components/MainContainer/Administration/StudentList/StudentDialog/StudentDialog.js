@@ -1,7 +1,9 @@
-import React, { Component } from 'react';
-import styled               from 'styled-components';
+import React, { Component }                                 from 'react';
+import styled                                               from 'styled-components';
 
-import EditableList         from '../../../../EditableList/EditableList';
+import EditableList                                         from '../../../../EditableList/EditableList';
+import { API_ANNOTATION_URL, API_ANNOTATION_DELETE_URL }    
+                                                            from '../../../../../data_types/ApiData';
 
 const StudentDialogContainer = styled.div`
     display: block;
@@ -59,7 +61,8 @@ class StudentDialog extends Component {
         super(props);
         this.state = {
             student: this.props.student,
-            annotations: this.props.student.annotations
+            annotations: this.props.student.annotations,
+            alerts: this.props.student.alerts
         }
     }
     /* LIFECYCLE METHODS */
@@ -74,6 +77,8 @@ class StudentDialog extends Component {
                 <StudentName>{student.name}</StudentName>
 
                 <StudentInformations>
+                    <Title>Alertas</Title>
+                    <EditableList items={this.adaptAlerts(this.state.alerts)} />
                     <Title>Anotações</Title>
                     <EditableList items={this.adaptAnnotations(this.state.annotations)} addButton={true} onAddItem={e => this.addAnnotation(e.target.name.value)} onDeleteItem={ id => this.deleteAnnotation(id) } />
                 </StudentInformations>
@@ -84,24 +89,48 @@ class StudentDialog extends Component {
 
     /* CUSTOM METHODS */
     addAnnotation = annotationText => {
-        const { id } = this.state.student;
-        let annotations = this.state.annotations;
-        let newAnnotations = annotations;
-        annotations.length > 0 ? this.newId = (annotations.slice(-1).pop().id)+1: this.newId = 0;
-        newAnnotations.push({ alunoId: id, id: this.newId, mensagem: annotationText });
-        this.setState({annotations}, () => this.props.addAnnotation(newAnnotations))
+        if(annotationText.length <= 0) {
+            return;
+        }
+        let annotationData = {alunoId: this.state.student.id, mensagem: annotationText};
+        fetch(API_ANNOTATION_URL, {
+            headers: {
+              'content-type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify(annotationData)
+        }).then(response => response.text().then( data => {
+            const annotationId = parseInt(data.substr(data.indexOf(':')+1, data.length))
+            let annotations = this.state.annotations;
+            annotationData = {...annotationData, id: annotationId}
+            annotations.push(annotationData);
+            this.setState({annotations})
+        }))
     }
     
     deleteAnnotation = id => {
-        let { annotations } = this.state;
-        let newAnnotations = annotations.filter(item => item.id !== id)
-        this.setState({annotations: newAnnotations}, () => this.props.removeAnnotation(id));
+        fetch(API_ANNOTATION_DELETE_URL.replace('{id}', id), {
+            method: 'DELETE'
+        }).then(response => {
+            let { annotations } = this.state;
+            let newAnnotations = annotations.filter(item => item.id !== id)
+            this.setState({annotations: newAnnotations});
+        })
     }
+  
 
     adaptAnnotations = ( list ) => {
         let newAnnotations = [];
         this.state.annotations.forEach( annotation => {
             newAnnotations.push({name: annotation.mensagem, id: annotation.id});
+        })
+        return newAnnotations;
+    }
+
+    adaptAlerts = ( list ) => {
+        let newAnnotations = [];
+        this.state.alerts.forEach( alert => {
+            newAnnotations.push({name: alert.mensagemAlerta, id: alert.id});
         })
         return newAnnotations;
     }
