@@ -7,6 +7,7 @@ import AddCourse                from './AddCourse/AddCourse';
 import Classes                  from './Classes/Classes';
 import Uploading                from './Uploading/Uploading';
 import StudentList              from './StudentList/StudentList';
+import Alerts                   from './Alerts/Alerts';
 import Menu                     from './Menu/Menu';
 /*import ExpandableContainer      from '../../ExpandableContainer/ExpandableContainer';*/
 
@@ -15,9 +16,8 @@ import faUser               from '@fortawesome/fontawesome-free-solid/faUser'
 import faGraduationCap      from '@fortawesome/fontawesome-free-solid/faGraduationCap'
 import faUpload             from '@fortawesome/fontawesome-free-solid/faUpload'
 import faNewspaper          from '@fortawesome/fontawesome-free-solid/faNewspaper'  
+import faBell               from '@fortawesome/fontawesome-free-solid/faBell'  
 import faBook               from '@fortawesome/fontawesome-free-solid/faBook'  
-
-
 
 const AdministrationContainer = styled.div`
   display: grid;
@@ -56,6 +56,12 @@ const menuItems = [
   },
   {
     idNum: 4,
+    id: 'alerts',
+    title: 'Alertas',
+    faIcon: faBell
+  },
+  {
+    idNum: 5,
     id: 'classes',
     title: 'Turmas',
     faIcon: faNewspaper
@@ -104,6 +110,9 @@ class Administration extends Component {
         }
         case 'discipline': {
           return <DisciplineList />
+        }
+        case 'alerts': {
+          return <Alerts />
         }
 
         default:

@@ -207,23 +207,23 @@ class Uploading extends Component {
         for(let i = 0; i < files.length; i++) {
             data.append('files', files[i]);
         }
-        let type;
-        switch (form.target.selector.value) {
-          case 'presenca':
-            type = 0;
-            break;
-          case 'sintese':
-            type = 1;
-            break;
-          case 'notas':
-            type = 2;
-            break;
+        let type = 0;
+        // switch (form.target.selector.value) {
+        //   case 'presenca':
+        //     type = 0;
+        //     break;
+        //   case 'sintese':
+        //     type = 1;
+        //     break;
+        //   case 'notas':
+        //     type = 2;
+        //     break;
         
-          default:
-            type = undefined;
-            break;
-        }
-        //data.append('type', type);
+        //   default:
+        //     type = undefined;
+        //     break;
+        // }
+        data.append('type', type);
         data.append('turma', form.target.class.value);
         console.log('turma => ', form.target.class.value)
         data.append('dataCorrespondente', form.target.date.value);
@@ -236,7 +236,6 @@ class Uploading extends Component {
             body: data
         }).then( e => {
           const { status, statusText } = e;
-          console.log(status, statusText);
           switch (status) {
             case 200:
               this.setState({
