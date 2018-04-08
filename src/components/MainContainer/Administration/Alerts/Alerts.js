@@ -133,12 +133,12 @@ class Alerts extends Component {
       data.forEach(student => {
         students.push(student);
       })
-    })).then( () => this.setState({students}, () => { console.dir(this.state.students) }));
+    })).then( () => this.setState({students}));
   }
 
   getStudentOptions = (students) => {
     return students.map( student =>
-     <option value={student.id}>{student.nomeAluno}</option> )
+     <option key={student.id} value={student.id}>{student.nomeAluno}</option> )
   }
 
   addAlert = (form) => {
@@ -151,49 +151,53 @@ class Alerts extends Component {
       method: 'POST', 
       body: JSON.stringify({dataAlerta: date.value, mensagemAlerta: message.value, alunoId: student.value, alertaAntigo: false, nivelPrioridade: level.value, origemAlerta: 0})
     }).then(response => {
-      const { status, statusText } = response;
-      switch (status) {
-        case 200:
-          this.setState({
-            status: {
-              title: 'Alerta enviado com sucesso.',
-              component: () => ( <SuccessTag msg={this.state.status.title} /> )
-            }
-          })
-          break;
-
-        case 500:
-          this.setState({
-            status: {
-              title: 'Erro interno no servidor. Verifique se os dados do alerta estão válidos.',
-              component: () => ( <InternalErrorTag msg={this.state.status.title} /> )
-            }
-          })
-          break;
-
-        case 404:
-          this.setState({
-            status: {
-              title: 'Não foi possível se comunicar com o servidor.',
-              component: () => ( <InternalErrorTag msg={this.state.status.title} /> )
-            }
-          })
-          break;
-
-
-        case 400:
-          this.setState({
-            status: {
-              title: 'Verifique se todas informações estão corretamente descritas.',
-              component: () => ( <InternalErrorTag msg={this.state.status.title} /> )
-            }
-          })
-          break;
-      
-        default:
-          break;
-      }
+      const { status } = response;
+      this.displayTag(status)
     });
+  }
+
+  displayTag = status => {
+    switch (status) {
+      case 200:
+        this.setState({
+          status: {
+            title: 'Alerta enviado com sucesso.',
+            component: () => ( <SuccessTag msg={this.state.status.title} /> )
+          }
+        })
+        break;
+
+      case 500:
+        this.setState({
+          status: {
+            title: 'Erro interno no servidor. Verifique se os dados do alerta estão válidos.',
+            component: () => ( <InternalErrorTag msg={this.state.status.title} /> )
+          }
+        })
+        break;
+
+      case 404:
+        this.setState({
+          status: {
+            title: 'Não foi possível se comunicar com o servidor.',
+            component: () => ( <InternalErrorTag msg={this.state.status.title} /> )
+          }
+        })
+        break;
+
+
+      case 400:
+        this.setState({
+          status: {
+            title: 'Verifique se todas informações estão corretamente descritas.',
+            component: () => ( <InternalErrorTag msg={this.state.status.title} /> )
+          }
+        })
+        break;
+    
+      default:
+        break;
+    }
   }
 }
 

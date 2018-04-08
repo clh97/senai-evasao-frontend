@@ -71,7 +71,7 @@ class StudentDialog extends Component {
         return (
             <StudentDialogContainer>
 
-                <StudentPhoto src={student.photoUrl ? student.photoUrl : 'http://placehold.it/320x320/'} alt="" />
+                <StudentPhoto src={student.photoUrl ? student.photoUrl : 'http://placehold.it/320x320/'} />
 
                 <StudentRegistration>RA: { student.registration }</StudentRegistration>
                 <StudentName>{student.name}</StudentName>
@@ -100,7 +100,7 @@ class StudentDialog extends Component {
             method: 'POST',
             body: JSON.stringify(annotationData)
         }).then(response => response.text().then( data => {
-            const annotationId = parseInt(data.substr(data.indexOf(':')+1, data.length))
+            const annotationId = parseInt(data.substr(data.indexOf(':')+1, data.length), 10)
             let annotations = this.state.annotations;
             annotationData = {...annotationData, id: annotationId}
             annotations.push(annotationData);

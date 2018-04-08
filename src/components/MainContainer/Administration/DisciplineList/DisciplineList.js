@@ -1,5 +1,4 @@
 import React, { Component }     from 'react';
-import styled                   from 'styled-components';
 
 import Discipline               from '../../../../data_types/Discipline';
 import { API_DISCIPLINES_URL, API_DISCIPLINE_POST_URL} 
@@ -19,11 +18,11 @@ class DisciplineList extends Component {
   /* LIFECYCLE METHODS */
   render() {
     return (
-      <form onSubmit={ e => {} }>
+      <div>
         {
-          this.state.disciplines ? <EditableList items={ this.state.disciplines } addButton={true}  onAddItem={e => this.addDiscipline(e.target.name.value)} /> : <Loading />
+          this.state.disciplines ? <EditableList items={ this.state.disciplines } addButton={true} onAddItem={e => this.addDiscipline(e.target.name.value)} /> : <Loading />
         }
-      </form>
+      </div>
     );
   }
 
@@ -52,7 +51,9 @@ class DisciplineList extends Component {
       },
       method: 'POST', 
       body: JSON.stringify({nomeDisciplina: disciplineName, cursoId: 1, termoId: 1})
-    }).then(response => console.dir(response.text())) /* PEDIR PARA BACK-END OTIMIZAR ESSE RESPONSE. PARA OBTER O ID SEM REGEX / SUBSTR */
+    }).then( () => {
+      // const newDiscipline = new Discipline({name: disciplineName})
+    }) /* PEDIR PARA BACK-END OTIMIZAR ESSE RESPONSE. PARA OBTER O ID SEM REGEX / SUBSTR */
   }
 
 }

@@ -12,12 +12,12 @@ import Menu                     from './Menu/Menu';
 /*import ExpandableContainer      from '../../ExpandableContainer/ExpandableContainer';*/
 
 /* ICONS */
-import faUser               from '@fortawesome/fontawesome-free-solid/faUser'
-import faGraduationCap      from '@fortawesome/fontawesome-free-solid/faGraduationCap'
-import faUpload             from '@fortawesome/fontawesome-free-solid/faUpload'
-import faNewspaper          from '@fortawesome/fontawesome-free-solid/faNewspaper'  
-import faBell               from '@fortawesome/fontawesome-free-solid/faBell'  
-import faBook               from '@fortawesome/fontawesome-free-solid/faBook'  
+import FaUser               from 'react-icons/lib/fa/user'
+import FaGraduationCap      from 'react-icons/lib/fa/graduation-cap'
+import FaUpload             from 'react-icons/lib/fa/upload'
+import FaNewspaper          from 'react-icons/lib/fa/newspaper-o'  
+import FaBell               from 'react-icons/lib/fa/bell'  
+import FaBook               from 'react-icons/lib/fa/book'  
 
 const AdministrationContainer = styled.div`
   display: grid;
@@ -34,37 +34,37 @@ const menuItems = [
     idNum: 0,
     id: 'studentList',
     title: 'Alunos',
-    faIcon: faUser
+    icon: FaUser
   },
   {
     idNum: 1,
     id: 'addCourse',
     title: 'Cursos',
-    faIcon: faGraduationCap
+    icon: FaGraduationCap
   },
   {
     idNum: 2,
     id: 'discipline',
     title: 'Disciplinas',
-    faIcon: faBook
+    icon: FaBook
   },
   {
     idNum: 3,
     id: 'uploading',
     title: 'Upload',
-    faIcon: faUpload
+    icon: FaUpload
   },
   {
     idNum: 4,
     id: 'alerts',
     title: 'Alertas',
-    faIcon: faBell
+    icon: FaBell
   },
   {
     idNum: 5,
     id: 'classes',
     title: 'Turmas',
-    faIcon: faNewspaper
+    icon: FaNewspaper
   }
 ]
 

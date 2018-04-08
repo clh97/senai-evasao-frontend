@@ -3,7 +3,6 @@ import styled               from 'styled-components';
 
 import { API_CLASS_URL }    from '../../../../../data_types/ApiData';
 import Class                from '../../../../../data_types/Class';
-import Loading              from '../../../../Loading/Loading';
 
 const LineBlock = styled.div`
   display: block;
@@ -43,15 +42,6 @@ const AddClassFormSelect = styled.select`
 const AddClassFormInput = styled.input`
   display: inline-block;
   width: 240px;
-`;
-
-const RadioSemesterSelector = styled.input.attrs({
-  type: 'radio'
-})`
-  position: absolute;
-  display: none;
-  visibility: hidden;
-  user-select: none;
 `;
 
 class AddClassForm extends Component {

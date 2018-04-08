@@ -1,5 +1,4 @@
 import React            from 'react';
-import FontAwesome      from '@fortawesome/react-fontawesome';
-import faSync           from '@fortawesome/fontawesome-free-solid/faSync'
+import FaSync           from 'react-icons/lib/md/cached'
 
-export default () => (<FontAwesome icon={faSync} style={ { margin: '1rem', animationName: 'rotate', animationDuration: '1.5s', animationIterationCount: 'infinite', fontSize: '1.5rem' } }/>)
+export default () => (<FaSync style={ { margin: '1rem', animationName: 'rotate', animationDuration: '1.5s', animationIterationCount: 'infinite', fontSize: '2.5rem' } }/>)

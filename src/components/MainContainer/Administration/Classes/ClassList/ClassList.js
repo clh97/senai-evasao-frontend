@@ -68,6 +68,7 @@ class ClassList extends Component {
   /* LIFECYCLE METHODS */
   render() {
     return (
+      <React.Fragment>
         <ClassListItemTable>
           <ClassListItemTBody>
             <ClassListItemTableRow>
@@ -94,7 +95,6 @@ class ClassList extends Component {
                   <ClassListItemTableRow key={item.id}>
                     <ClassListItemTableData>{item.id}</ClassListItemTableData>
                     <ClassListItemTableData>{item.className}</ClassListItemTableData>
-                    {/* {<ClassListItemTableData>{item.semester}</ClassListItemTableData>} */}
                     <ClassListItemTableData>
                       {this.parseClassPeriod(item.period)}
                     </ClassListItemTableData>
@@ -103,16 +103,22 @@ class ClassList extends Component {
                     </ClassListItemTableData>
                   </ClassListItemTableRow>
                 );
-              }) : (<ClassListItemTableRow><Loading /></ClassListItemTableRow>)
+              }) : undefined
             }
           </ClassListItemTBody>
         </ClassListItemTable>
+        {
+          this.props.items ? undefined : <Loading />
+        }
+      </React.Fragment>
     );
   }
 
+  /* TODO: PERGUNTAR PARA PROFESSORA QUAL A FORMA MAIS EFICIENTE DE CRIAR CLASSES COM STYLED-COMPONENTS */
+
   /* CUSTOM METHODS */
   parseClassPeriod = (periodNumber) => {
-    switch (parseInt(periodNumber)) {
+    switch (parseInt(periodNumber, 10)) {
       case 0:
         return 'MANHÃ';
       case 1:

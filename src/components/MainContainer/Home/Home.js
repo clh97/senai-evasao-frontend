@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 
 import ErrorMessage         from '../../ErrorTag/ErrorTag';
 
-import './Home.css';
-
 class Home extends Component {
     render() {
         const { indiceEvasao } = this.props.info;

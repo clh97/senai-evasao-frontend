@@ -58,7 +58,7 @@ class Classes extends Component {
     }
     
     handleAddClass = e => {
-        const { course, semester, period, name } = e.target;
+        const { /*course, semester,*/ period, name } = e.target;
         let newClasses = this.state.classes;
         newClasses.length !== 0 ? this.newId = (this.state.classes.slice(-1).pop().id)+1 : this.newId = 1;
         const newClass = new Class(this.newId, /*course*/ 1, name.value, period.value, 0)
@@ -69,8 +69,8 @@ class Classes extends Component {
               'content-type': 'application/json'
             },
             method: 'POST', 
-            body: JSON.stringify({nomeTurma: newClass.className, periodo: newClass.period, escolaId: newClass.schoolId, statusTurma: true })
-          }).then( response => console.dir(response)).then(data => console.dir(data))
+            body: JSON.stringify({nomeTurma: newClass.className, periodo: newClass.period, escolaId: newClass.schoolId, statusTurma: true})
+          })
         });
     }
 

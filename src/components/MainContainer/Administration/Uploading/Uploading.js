@@ -157,7 +157,7 @@ class Uploading extends Component {
 
     getClassOptions = (classes) => {
       return classes.map( _class => (
-        <option value={_class.id}>{_class.className}</option>
+        <option key={_class.id} value={_class.id}>{_class.className}</option>
       ))
     }
 
@@ -177,7 +177,7 @@ class Uploading extends Component {
 
     getCourseOptions = courses => {
       return courses.map( course => (
-        <option value={course.id}>{course.name}</option>
+        <option key={course.id} value={course.id}>{course.name}</option>
       ))
     }
 
@@ -197,7 +197,7 @@ class Uploading extends Component {
 
     getDisciplineOptions = disciplines => {
       return disciplines.map( discipline => (
-        <option value={discipline.id}>{discipline.name}</option>
+        <option key={discipline.id} value={discipline.id}>{discipline.name}</option>
       ))
     }
 
@@ -225,49 +225,49 @@ class Uploading extends Component {
         // }
         data.append('type', type);
         data.append('turma', form.target.class.value);
-        console.log('turma => ', form.target.class.value)
         data.append('dataCorrespondente', form.target.date.value);
         data.append('disciplina', 3);
-
-        console.log(form.target.date.value);
-
         fetch(API_UPLOAD_URL, {
             method: 'POST',
             body: data
         }).then( e => {
-          const { status, statusText } = e;
-          switch (status) {
-            case 200:
-              this.setState({
-                status: {
-                  title: 'Planilha enviada com sucesso.',
-                  component: () => ( <SuccessTag msg={this.state.status.title} /> )
-                }
-              })
-              break;
-
-            case 500:
-              this.setState({
-                status: {
-                  title: 'Erro interno no servidor. Verifique se a planilha é válida.',
-                  component: () => ( <InternalErrorTag msg={this.state.status.title} /> )
-                }
-              })
-              break;
-
-            case 404:
-              this.setState({
-                status: {
-                  title: 'Não foi possível se comunicar com o servidor.',
-                  component: () => ( <InternalErrorTag msg={this.state.status.title} /> )
-                }
-              })
-              break;
-          
-            default:
-              break;
-          }
+          const { status } = e;
+          this.displayTag(status);
         });
+    }
+
+    displayTag = status => {
+      switch (status) {
+        case 200:
+          this.setState({
+            status: {
+              title: 'Planilha enviada com sucesso.',
+              component: () => ( <SuccessTag msg={this.state.status.title} /> )
+            }
+          })
+          break;
+
+        case 500:
+          this.setState({
+            status: {
+              title: 'Erro interno no servidor. Verifique se a planilha é válida.',
+              component: () => ( <InternalErrorTag msg={this.state.status.title} /> )
+            }
+          })
+          break;
+
+        case 404:
+          this.setState({
+            status: {
+              title: 'Não foi possível se comunicar com o servidor.',
+              component: () => ( <InternalErrorTag msg={this.state.status.title} /> )
+            }
+          })
+          break;
+      
+        default:
+          break;
+      }
     }
 
 }

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styled               from 'styled-components';
-import FontAwesome          from '@fortawesome/react-fontawesome';
 
 const MenuContainer = styled.aside`
   grid-column-start: 1;
@@ -36,9 +35,9 @@ const MenuContainerListItem = styled.li`
   }
 `;
 
-const ComposedListItem = ({ key, id, title, faIcon, onClick }) => (
-    <MenuContainerListItem key={key} onClick={ () => onClick(id) } >
-      <FontAwesome icon={faIcon}/>
+const ComposedListItem = ({ id, title, icon, onClick }) => (
+    <MenuContainerListItem key={id} onClick={ () => onClick(id) } >
+      {icon()}
       {title}
     </MenuContainerListItem>
 );
@@ -53,7 +52,7 @@ class Menu extends Component {
         <MenuContainerList>
           {
             this.props.items.map( item => {
-              return <ComposedListItem key={item.idNum} id={item.id} title={item.title} faIcon={item.faIcon} onClick={ this.props.onDisplayChange } />
+              return <ComposedListItem key={item.idNum} id={item.id} title={item.title} icon={item.icon} onClick={ this.props.onDisplayChange } />
             } )
           }
         </MenuContainerList>
@@ -61,8 +60,6 @@ class Menu extends Component {
       </MenuContainer>
     );
   }
-
-  /* -- CUSTOM METHODS -- */
 }
 
 export default Menu;

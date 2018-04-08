@@ -107,14 +107,11 @@ class StudentList extends Component {
     }
 
     /* -- CUSTOM METHODS -- */
-
     fetchStudents = () => {
-      const students = [];
-      fetch(API_STUDENTS_URL).then(response => response.json().then( data => {
-        data.forEach(student => {
-          students.push(associateStudentData(student));
-        })
-      })).then( () => this.setState({students}, () => { this.reorderStudentList(this.state.students) }) ).catch(e => { console.dir(e) });
+      let students = [];
+      fetch(API_STUDENTS_URL).then(response => response.json().then( data => students = data.map(student => associateStudentData(student) )))
+                             .then( () => this.setState({students}, () => this.reorderStudentList(this.state.students)) )
+                             .catch(e => { console.log('erro no fetch de estudantes!') });
     }
 
     openDialog = student => this.setState({currentStudent: student, dialogIsOpen: true});
@@ -123,7 +120,7 @@ class StudentList extends Component {
 
     generateListItem = student => {
       let alertColor;
-      student.alerts.length > 0 ? alertColor = this.defineStudentAlertColor(student) : alertColor = '--darker-bg';
+      student.alerts.length > 0 ? alertColor = this.setStudentColor(student) : alertColor = '--darker-bg';
       return (
         <StudentListItem key={student.id} background={`var(${alertColor});`} onClick={ () => this.openDialog(student) }>
           {
@@ -135,12 +132,10 @@ class StudentList extends Component {
       )
     }
 
-    defineStudentAlertColor = student => {
+    setStudentColor = student => {
       let color = '--medium-bg';
       let levels = [];
-      student.alerts.forEach( alert => {
-        levels.push(alert.nivelPrioridade);
-      })
+      student.alerts.forEach( alert => levels.push(alert.nivelPrioridade))
       let max = levels.reduce((a, b) => Math.max(a, b));
       max === 1 ? color = '--yellow-student' : color = '--red-student';
       return color;
@@ -151,6 +146,7 @@ class StudentList extends Component {
       let finalList;
       let redStudentList = [];
       let yelStudentList = [];
+
       newStudentList.forEach( student => {
         student.alerts.forEach( alert => {
           if(alert.nivelPrioridade === 2) {
@@ -161,6 +157,7 @@ class StudentList extends Component {
             yelStudentList.push(student);
             newStudentList.slice(1, newStudentList.indexOf(student));
           } 
+
         } )
         redStudentList.forEach( red => {
            yelStudentList.forEach( (yel, index) => {
@@ -173,7 +170,6 @@ class StudentList extends Component {
       finalList = [...redStudentList, ...yelStudentList];
       this.setState({students: finalList});
     }
-
 }
 
 export default StudentList;

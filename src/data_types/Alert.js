@@ -1,14 +1,5 @@
 export default class Alert {
-  constructor(props) {
-    const {
-      nivelPrioridade:priority,
-      alunoId:studentId,
-      mensagemAlerta:message,
-      alertaAntigo:old,
-      dataAlerta:date,
-      origemAlerta:origin,
-      id:alertId
-    } = props;
+  constructor(priority, studentId, message, old, date, origin, alertId) {
     
     this.priority       = priority;
     this.studentId      = studentId;
